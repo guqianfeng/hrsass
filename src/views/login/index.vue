@@ -5,7 +5,7 @@
       :model="loginForm"
       :rules="loginRules"
       class="login-form"
-      auto-complete="on"
+      auto-complete="off"
       label-position="left"
     >
       <!-- 放置标题图片 @是设置的别名-->
@@ -14,18 +14,18 @@
           <img src="@/assets/common/login-logo.png" alt="" />
         </h3>
       </div>
-      <el-form-item prop="username">
+      <el-form-item prop="mobile">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
+          ref="mobile"
+          v-model="loginForm.mobile"
+          placeholder="请输入手机号"
+          name="mobile"
           type="text"
           tabindex="1"
-          auto-complete="on"
+          auto-complete="off"
         />
       </el-form-item>
 
@@ -38,10 +38,10 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="请输入密码"
           name="password"
           tabindex="2"
-          auto-complete="on"
+          auto-complete="off"
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
@@ -69,36 +69,48 @@
 </template>
 
 <script>
-import { validUsername } from "@/utils/validate";
+import { validMobile } from "@/utils/validate";
 
 export default {
   name: "Login",
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error("Please enter the correct user name"));
-      } else {
-        callback();
-      }
-    };
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error("The password can not be less than 6 digits"));
+    const validateMobile = (rule, value, callback) => {
+      if (!validMobile(value)) {
+        callback(new Error("请输入正确的手机号"));
       } else {
         callback();
       }
     };
     return {
       loginForm: {
-        username: "admin",
-        password: "111111",
+        mobile: "13800000002",
+        password: "123456",
       },
       loginRules: {
-        username: [
-          { required: true, trigger: "blur", validator: validateUsername },
+        mobile: [
+          // { required: true, trigger: "blur", validator: validateUsername },
+          {
+            required: true,
+            trigger: ["blur", "change"],
+            message: "请输入手机号",
+          },
+          {
+            validator: validateMobile,
+            trigger: ["blur", "change"],
+          },
         ],
         password: [
-          { required: true, trigger: "blur", validator: validatePassword },
+          {
+            required: true,
+            trigger: ["blur", "change"],
+            message: "请输入密码",
+          },
+          {
+            min: 6,
+            max: 12,
+            trigger: ["blur", "change"],
+            message: "密码长度6-12位",
+          },
         ],
       },
       loading: false,
