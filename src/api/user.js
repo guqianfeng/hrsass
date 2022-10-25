@@ -7,5 +7,6 @@ export const reqLogin = async (loginForm) => {
     url: "/sys/login",
     data: loginForm,
   });
-  console.log(res);
+  // console.log(res);
+  return res;
 };

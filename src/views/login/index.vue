@@ -71,6 +71,7 @@
 <script>
 import { validMobile } from "@/utils/validate";
 import { reqLogin } from "@/api/user";
+import { mapActions } from "vuex";
 
 export default {
   name: "Login",
@@ -128,6 +129,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("user", ["login"]),
     showPwd() {
       if (this.passwordType === "password") {
         this.passwordType = "";
@@ -139,11 +141,7 @@ export default {
       });
     },
     handleLogin() {
-      this.$refs.loginForm.validate((flag) => {
-        if (!flag) return;
-        // console.log(this.$request);
-        reqLogin(this.loginForm);
-      });
+      this.login(this.loginForm);
     },
   },
 };
