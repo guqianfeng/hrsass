@@ -143,7 +143,8 @@ export default {
         // console.log(this.$request);
         this.$request({
           method: "POST",
-          url: "http://ihrm-java.itheima.net/api/sys/login",
+          // url: "http://ihrm-java.itheima.net/api/sys/login",
+          url: "http://localhost:8888/api/sys/login",
           data: this.loginForm,
         });
       });
