@@ -138,22 +138,14 @@ export default {
       });
     },
     handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true;
-          this.$store
-            .dispatch("user/login", this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || "/" });
-              this.loading = false;
-            })
-            .catch(() => {
-              this.loading = false;
-            });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
+      this.$refs.loginForm.validate((flag) => {
+        if (!flag) return;
+        // console.log(this.$request);
+        this.$request({
+          method: "POST",
+          url: "http://ihrm-java.itheima.net/api/sys/login",
+          data: this.loginForm,
+        });
       });
     },
   },

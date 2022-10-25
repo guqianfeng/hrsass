@@ -14,6 +14,7 @@ import router from "./router";
 
 import "@/icons"; // icon
 import "@/permission"; // permission control
+import request from "@/utils/request";
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale });
@@ -21,6 +22,8 @@ Vue.use(ElementUI, { locale });
 // Vue.use(ElementUI)
 
 Vue.config.productionTip = false;
+
+Vue.prototype.$request = request;
 
 new Vue({
   el: "#app",
