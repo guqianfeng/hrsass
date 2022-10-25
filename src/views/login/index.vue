@@ -70,6 +70,7 @@
 
 <script>
 import { validMobile } from "@/utils/validate";
+import { reqLogin } from "@/api/user";
 
 export default {
   name: "Login",
@@ -141,12 +142,7 @@ export default {
       this.$refs.loginForm.validate((flag) => {
         if (!flag) return;
         // console.log(this.$request);
-        this.$request({
-          method: "POST",
-          // url: "http://ihrm-java.itheima.net/api/sys/login",
-          url: "http://localhost:8888/api/sys/login",
-          data: this.loginForm,
-        });
+        reqLogin(this.loginForm);
       });
     },
   },
