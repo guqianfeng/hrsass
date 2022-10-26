@@ -16,7 +16,7 @@ const actions = {
       try {
         const res = await reqLogin(data);
         // console.log(res.data.data);
-        context.commit("setToken", res.data.data);
+        context.commit("setToken", res.data);
         resolve(res);
       } catch (error) {
         reject(error);
