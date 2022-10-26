@@ -36,11 +36,14 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 
 export default {
+  created() {
+    this.getUserInfo();
+  },
   components: {
     Breadcrumb,
     Hamburger,
@@ -49,6 +52,7 @@ export default {
     ...mapGetters(["sidebar", "avatar"]),
   },
   methods: {
+    ...mapActions("user", ["getUserInfo"]),
     toggleSideBar() {
       this.$store.dispatch("app/toggleSideBar");
     },

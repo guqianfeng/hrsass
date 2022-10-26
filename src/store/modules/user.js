@@ -1,13 +1,17 @@
-import { reqLogin } from "@/api/user";
+import { reqGetProfile, reqLogin } from "@/api/user";
 import { getToken, setToken } from "@/utils/auth";
 const state = {
   token: getToken(),
+  userInfo: {},
 };
 const getters = {};
 const mutations = {
   setToken(state, newToken) {
     state.token = newToken;
     setToken(newToken);
+  },
+  setUserInfo(state, newUserInfo) {
+    state.userInfo = newUserInfo;
   },
 };
 const actions = {
@@ -22,6 +26,10 @@ const actions = {
         reject(error);
       }
     });
+  },
+  async getUserInfo(context) {
+    const res = await reqGetProfile();
+    context.commit("setUserInfo", res.data);
   },
 };
 

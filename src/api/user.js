@@ -9,7 +9,7 @@ export const reqLogin = (loginForm) => {
   });
 };
 
-export const reqGetUserProfile = () => {
+export const reqGetProfile = () => {
   return request({
     method: "POST",
     url: "/sys/profile",
