@@ -28,8 +28,11 @@ const actions = {
     });
   },
   async getUserInfo(context) {
-    const res = await reqGetProfile();
-    context.commit("setUserInfo", res.data);
+    return new Promise(async (resolve) => {
+      const res = await reqGetProfile();
+      context.commit("setUserInfo", res.data);
+      resolve(res);
+    });
   },
 };
 

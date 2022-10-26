@@ -43,9 +43,9 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 
 export default {
-  created() {
-    this.getUserInfo();
-  },
+  // created() {
+  //   this.getUserInfo();
+  // },
   components: {
     Breadcrumb,
     Hamburger,
