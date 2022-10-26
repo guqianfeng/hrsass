@@ -140,8 +140,14 @@ export default {
         this.$refs.password.focus();
       });
     },
-    handleLogin() {
-      this.login(this.loginForm);
+    async handleLogin() {
+      try {
+        await this.login(this.loginForm);
+        this.$message.success("登录成功");
+        this.$router.push("/");
+      } catch (error) {
+        this.$message.error("登录失败");
+      }
     },
   },
 };

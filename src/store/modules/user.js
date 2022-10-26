@@ -12,9 +12,16 @@ const mutations = {
 };
 const actions = {
   async login(context, data) {
-    const res = await reqLogin(data);
-    // console.log(res.data.data);
-    context.commit("setToken", res.data.data);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await reqLogin(data);
+        // console.log(res.data.data);
+        context.commit("setToken", res.data.data);
+        resolve(res);
+      } catch (error) {
+        reject(error);
+      }
+    });
   },
 };
 
