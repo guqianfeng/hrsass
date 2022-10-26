@@ -141,9 +141,17 @@ export default {
       });
     },
     async handleLogin() {
-      await this.login(this.loginForm);
-      this.$message.success("登录成功");
-      this.$router.push("/");
+      this.$refs.loginForm.validate(async (flag) => {
+        if (!flag) return;
+        this.loading = true;
+        try {
+          await this.login(this.loginForm);
+          this.$message.success("登录成功");
+          this.$router.push("/");
+        } finally {
+          this.loading = false;
+        }
+      });
     },
   },
 };
