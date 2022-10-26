@@ -1,4 +1,4 @@
-import { reqGetProfile, reqLogin } from "@/api/user";
+import { reqGetBaseInfo, reqGetProfile, reqLogin } from "@/api/user";
 import { getToken, setToken } from "@/utils/auth";
 const state = {
   token: getToken(),
@@ -15,16 +15,21 @@ const mutations = {
   },
 };
 const actions = {
-  async login(context, data) {
-    const res = await reqLogin(data);
+  async login(context, loginForm) {
+    const { data } = await reqLogin(loginForm);
     // console.log(res.data.data);
-    context.commit("setToken", res.data);
-    return res;
+    context.commit("setToken", data);
+    return data;
   },
   async getUserInfo(context) {
-    const res = await reqGetProfile();
-    context.commit("setUserInfo", res.data);
-    return res;
+    const { data: data1 } = await reqGetProfile();
+    const { data: data2 } = await reqGetBaseInfo(data1.userId);
+    const result = {
+      ...data1,
+      ...data2,
+    };
+    context.commit("setUserInfo", result);
+    return result;
   },
 };
 

@@ -15,3 +15,14 @@ export const reqGetProfile = () => {
     url: "/sys/profile",
   });
 };
+
+/**
+ * 获取基本信息
+ * @param {*} id
+ */
+export const reqGetBaseInfo = (id) => {
+  return request({
+    method: "GET",
+    url: `/sys/user/${id}`,
+  });
+};
