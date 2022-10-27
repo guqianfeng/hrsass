@@ -29,10 +29,12 @@ Vue.prototype.$request = request;
 
 // Vue.directive("imgerror", imgerror);
 // Vue.directive("color", color);
-for (const key in directives) {
-  // console.log(key, directives[key]);
-  Vue.directive(key, directives[key]);
-}
+// for (const key in directives) {
+//   // console.log(key, directives[key]);
+//   Vue.directive(key, directives[key]);
+// }
+
+Object.keys(directives).forEach((key) => Vue.directive(key, directives[key]));
 
 new Vue({
   el: "#app",
