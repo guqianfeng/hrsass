@@ -15,7 +15,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="@/assets/common/bigUserHeader.png" class="user-avatar" />
+          <img src="staffPhoto" class="user-avatar" />
           <span class="name">{{ name }}</span>
           <!-- <span class="name">{{ $store.getters.name }}</span> -->
           <!-- <span class="name">{{ $store.state.user.userInfo.username }}</span> -->
@@ -51,7 +51,7 @@ export default {
     Hamburger,
   },
   computed: {
-    ...mapGetters(["sidebar", "avatar", "name"]),
+    ...mapGetters(["sidebar", "avatar", "name", "staffPhoto"]),
   },
   methods: {
     ...mapActions("user", ["getUserInfo"]),
