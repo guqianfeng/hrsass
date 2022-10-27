@@ -2,6 +2,7 @@ import axios from "axios";
 import store from "@/store";
 import { MessageBox, Message } from "element-ui";
 import { getToken } from "@/utils/auth";
+import router from "@/router";
 
 // create an axios instance
 const request = axios.create({
@@ -43,7 +44,14 @@ request.interceptors.response.use(
   function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
-    Message.error(error.message);
+    // console.dir(error);
+    if (error.response.status === 401 && error.response.data.code === 10002) {
+      Message.error("亲，你登录信息已过期请重新登录");
+      store.dispatch("user/logout");
+      router.push("/login");
+    } else {
+      Message.error(error.message);
+    }
     return Promise.reject(error);
   }
 );
