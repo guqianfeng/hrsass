@@ -28,7 +28,7 @@
           <a target="_blank" href="https://github.com/qianfengg/hrsass">
             <el-dropdown-item>项目地址</el-dropdown-item>
           </a>
-          <el-dropdown-item divided @click.native="logout">
+          <el-dropdown-item divided @click.native="onLogout">
             <span v-color="color" style="display: block">登出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -55,13 +55,13 @@ export default {
     ...mapGetters(["sidebar", "avatar", "name", "staffPhoto"]),
   },
   methods: {
-    ...mapActions("user", ["getUserInfo"]),
+    ...mapActions("user", ["getUserInfo", "logout"]),
     toggleSideBar() {
       this.$store.dispatch("app/toggleSideBar");
     },
-    async logout() {
-      await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+    async onLogout() {
+      this.logout();
+      this.$router.push("/login");
     },
   },
   data() {

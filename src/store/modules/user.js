@@ -1,5 +1,5 @@
 import { reqGetBaseInfo, reqGetProfile, reqLogin } from "@/api/user";
-import { getToken, setToken } from "@/utils/auth";
+import { getToken, removeToken, setToken } from "@/utils/auth";
 const state = {
   token: getToken(),
   userInfo: {},
@@ -10,8 +10,15 @@ const mutations = {
     state.token = newToken;
     setToken(newToken);
   },
+  removeToken(state) {
+    state.token = "";
+    removeToken();
+  },
   setUserInfo(state, newUserInfo) {
     state.userInfo = newUserInfo;
+  },
+  removeUserInfo(state) {
+    state.userInfo = {};
   },
 };
 const actions = {
@@ -30,6 +37,10 @@ const actions = {
     };
     context.commit("setUserInfo", result);
     return result;
+  },
+  async logout(context) {
+    context.commit("removeToken");
+    context.commit("removeUserInfo");
   },
 };
 

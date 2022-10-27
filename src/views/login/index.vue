@@ -70,7 +70,6 @@
 
 <script>
 import { validMobile } from "@/utils/validate";
-import { reqLogin } from "@/api/user";
 import { mapActions } from "vuex";
 
 export default {
