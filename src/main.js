@@ -15,7 +15,7 @@ import router from "./router";
 import "@/icons"; // icon
 import "@/permission"; // permission control
 import request from "@/utils/request";
-import { imgerror } from "@/directives";
+import { imgerror, color } from "@/directives";
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale });
@@ -27,6 +27,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$request = request;
 
 Vue.directive("imgerror", imgerror);
+Vue.directive("color", color);
 
 new Vue({
   el: "#app",

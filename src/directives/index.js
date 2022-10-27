@@ -5,3 +5,9 @@ export const imgerror = {
     };
   },
 };
+
+export const color = {
+  inserted(el, binding) {
+    el.style.color = binding.value;
+  },
+};

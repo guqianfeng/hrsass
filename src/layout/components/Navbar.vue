@@ -29,7 +29,7 @@
             <el-dropdown-item>项目地址</el-dropdown-item>
           </a>
           <el-dropdown-item divided @click.native="logout">
-            <span style="display: block">登出</span>
+            <span v-color="color" style="display: block">登出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -67,6 +67,7 @@ export default {
   data() {
     return {
       defaultImg: headImg,
+      color: "red",
     };
   },
 };
