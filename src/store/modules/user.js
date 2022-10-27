@@ -1,53 +1,53 @@
-import { reqGetBaseInfo, reqGetProfile, reqLogin } from "@/api/user";
-import { getToken, removeToken, setToken } from "@/utils/auth";
+import { reqGetBaseInfo, reqGetProfile, reqLogin } from '@/api/user'
+import { getToken, removeToken, setToken } from '@/utils/auth'
 const state = {
   token: getToken(),
-  userInfo: {},
-};
-const getters = {};
+  userInfo: {}
+}
+const getters = {}
 const mutations = {
   setToken(state, newToken) {
-    state.token = newToken;
-    setToken(newToken);
+    state.token = newToken
+    setToken(newToken)
   },
   removeToken(state) {
-    state.token = "";
-    removeToken();
+    state.token = ''
+    removeToken()
   },
   setUserInfo(state, newUserInfo) {
-    state.userInfo = newUserInfo;
+    state.userInfo = newUserInfo
   },
   removeUserInfo(state) {
-    state.userInfo = {};
-  },
-};
+    state.userInfo = {}
+  }
+}
 const actions = {
   async login(context, loginForm) {
-    const { data } = await reqLogin(loginForm);
+    const { data } = await reqLogin(loginForm)
     // console.log(res.data.data);
-    context.commit("setToken", data);
-    return data;
+    context.commit('setToken', data)
+    return data
   },
   async getUserInfo(context) {
-    const { data: data1 } = await reqGetProfile();
-    const { data: data2 } = await reqGetBaseInfo(data1.userId);
+    const { data: data1 } = await reqGetProfile()
+    const { data: data2 } = await reqGetBaseInfo(data1.userId)
     const result = {
       ...data1,
-      ...data2,
-    };
-    context.commit("setUserInfo", result);
-    return result;
+      ...data2
+    }
+    context.commit('setUserInfo', result)
+    return result
   },
   async logout(context) {
-    context.commit("removeToken");
-    context.commit("removeUserInfo");
-  },
-};
+    context.commit('removeToken')
+    context.commit('removeUserInfo')
+  }
+}
 
 export default {
   namespaced: true,
   state,
   getters,
   mutations,
-  actions,
-};
+  actions
+}

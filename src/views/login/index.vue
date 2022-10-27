@@ -11,7 +11,7 @@
       <!-- 放置标题图片 @是设置的别名-->
       <div class="title-container">
         <h3 class="title">
-          <img src="@/assets/common/login-logo.png" alt="" />
+          <img src="@/assets/common/login-logo.png" alt="">
         </h3>
       </div>
       <el-form-item prop="mobile">
@@ -57,8 +57,7 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-        >Login</el-button
-      >
+      >Login</el-button>
 
       <div class="tips">
         <span style="margin-right: 20px">账号: 13800000002</span>
@@ -69,91 +68,91 @@
 </template>
 
 <script>
-import { validMobile } from "@/utils/validate";
-import { mapActions } from "vuex";
+import { validMobile } from '@/utils/validate'
+import { mapActions } from 'vuex'
 
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     const validateMobile = (rule, value, callback) => {
       if (!validMobile(value)) {
-        callback(new Error("请输入正确的手机号"));
+        callback(new Error('请输入正确的手机号'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
       loginForm: {
-        mobile: "13800000002",
-        password: "123456",
+        mobile: '13800000002',
+        password: '123456'
       },
       loginRules: {
         mobile: [
           // { required: true, trigger: "blur", validator: validateUsername },
           {
             required: true,
-            trigger: ["blur", "change"],
-            message: "请输入手机号",
+            trigger: ['blur', 'change'],
+            message: '请输入手机号'
           },
           {
             validator: validateMobile,
-            trigger: ["blur", "change"],
-          },
+            trigger: ['blur', 'change']
+          }
         ],
         password: [
           {
             required: true,
-            trigger: ["blur", "change"],
-            message: "请输入密码",
+            trigger: ['blur', 'change'],
+            message: '请输入密码'
           },
           {
             min: 6,
             max: 12,
-            trigger: ["blur", "change"],
-            message: "密码长度6-12位",
-          },
-        ],
+            trigger: ['blur', 'change'],
+            message: '密码长度6-12位'
+          }
+        ]
       },
       loading: false,
-      passwordType: "password",
-      redirect: undefined,
-    };
+      passwordType: 'password',
+      redirect: undefined
+    }
   },
   watch: {
     $route: {
-      handler: function (route) {
-        this.redirect = route.query && route.query.redirect;
+      handler: function(route) {
+        this.redirect = route.query && route.query.redirect
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {
-    ...mapActions("user", ["login"]),
+    ...mapActions('user', ['login']),
     showPwd() {
-      if (this.passwordType === "password") {
-        this.passwordType = "";
+      if (this.passwordType === 'password') {
+        this.passwordType = ''
       } else {
-        this.passwordType = "password";
+        this.passwordType = 'password'
       }
       this.$nextTick(() => {
-        this.$refs.password.focus();
-      });
+        this.$refs.password.focus()
+      })
     },
     async handleLogin() {
-      this.$refs.loginForm.validate(async (flag) => {
-        if (!flag) return;
-        this.loading = true;
+      this.$refs.loginForm.validate(async(flag) => {
+        if (!flag) return
+        this.loading = true
         try {
-          await this.login(this.loginForm);
-          this.$message.success("登录成功");
-          this.$router.push("/");
+          await this.login(this.loginForm)
+          this.$message.success('登录成功')
+          this.$router.push('/')
         } finally {
-          this.loading = false;
+          this.loading = false
         }
-      });
-    },
-  },
-};
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss">

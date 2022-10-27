@@ -1,20 +1,20 @@
-import request from "@/utils/request";
+import request from '@/utils/request'
 
 export const reqLogin = (loginForm) => {
   return request({
-    method: "POST",
+    method: 'POST',
     // url: "http://ihrm-java.itheima.net/api/sys/login",
-    url: "/sys/login",
-    data: loginForm,
-  });
-};
+    url: '/sys/login',
+    data: loginForm
+  })
+}
 
 export const reqGetProfile = () => {
   return request({
-    method: "POST",
-    url: "/sys/profile",
-  });
-};
+    method: 'POST',
+    url: '/sys/profile'
+  })
+}
 
 /**
  * 获取基本信息
@@ -22,7 +22,7 @@ export const reqGetProfile = () => {
  */
 export const reqGetBaseInfo = (id) => {
   return request({
-    method: "GET",
-    url: `/sys/user/${id}`,
-  });
-};
+    method: 'GET',
+    url: `/sys/user/${id}`
+  })
+}

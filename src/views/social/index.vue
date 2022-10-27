@@ -8,8 +8,8 @@
 
 <script>
 export default {
-  name: "Social",
-};
+  name: 'Social'
+}
 </script>
 
 <style></style>

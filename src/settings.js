@@ -1,5 +1,5 @@
 module.exports = {
-  title: "人资项目",
+  title: '人资项目',
 
   /**
    * @type {boolean} true | false
@@ -11,5 +11,5 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: true,
-};
+  sidebarLogo: true
+}

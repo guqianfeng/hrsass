@@ -15,7 +15,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="staffPhoto" class="user-avatar" v-imgerror="defaultImg" />
+          <img v-imgerror="defaultImg" src="staffPhoto" class="user-avatar">
           <span class="name">{{ name }}</span>
           <!-- <span class="name">{{ $store.getters.name }}</span> -->
           <!-- <span class="name">{{ $store.state.user.userInfo.username }}</span> -->
@@ -38,39 +38,38 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import Breadcrumb from "@/components/Breadcrumb";
-import Hamburger from "@/components/Hamburger";
-import headImg from "@/assets/common/head.jpg";
+import { mapActions, mapGetters } from 'vuex'
+import Hamburger from '@/components/Hamburger'
+import headImg from '@/assets/common/bigUserHeader.png'
 
 export default {
+  components: {
+    Hamburger
+  },
   // created() {
   //   this.getUserInfo();
   // },
-  components: {
-    Breadcrumb,
-    Hamburger,
-  },
-  computed: {
-    ...mapGetters(["sidebar", "avatar", "name", "staffPhoto"]),
-  },
-  methods: {
-    ...mapActions("user", ["getUserInfo", "logout"]),
-    toggleSideBar() {
-      this.$store.dispatch("app/toggleSideBar");
-    },
-    async onLogout() {
-      this.logout();
-      this.$router.push("/login");
-    },
-  },
   data() {
     return {
       defaultImg: headImg,
-      color: "red",
-    };
+      color: 'red'
+    }
   },
-};
+  computed: {
+    ...mapGetters(['sidebar', 'avatar', 'name', 'staffPhoto'])
+  },
+  methods: {
+    ...mapActions('user', ['getUserInfo', 'logout']),
+    toggleSideBar() {
+      this.$store.dispatch('app/toggleSideBar')
+    },
+    async onLogout() {
+      this.logout()
+      this.$router.push('/login')
+    }
+  }
+
+}
 </script>
 
 <style lang="scss" scoped>
