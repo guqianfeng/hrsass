@@ -1,5 +1,5 @@
 import Layout from '@/layout'
-const attendancesRouter = {
+export default {
   path: '/attendances',
   component: Layout,
   children: [
@@ -7,9 +7,7 @@ const attendancesRouter = {
       path: 'attendances',
       name: 'attendances',
       component: () => import('@/views/attendances/index'),
-      meta: { title: '考勤', icon: 'dashboard' }
+      meta: { title: '考勤', icon: 'skill' }
     }
   ]
 }
-
-export default attendancesRouter
