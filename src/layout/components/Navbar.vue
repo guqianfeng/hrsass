@@ -15,7 +15,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="staffPhoto" class="user-avatar" />
+          <img src="staffPhoto" class="user-avatar" v-imgerror="defaultImg" />
           <span class="name">{{ name }}</span>
           <!-- <span class="name">{{ $store.getters.name }}</span> -->
           <!-- <span class="name">{{ $store.state.user.userInfo.username }}</span> -->
@@ -41,6 +41,7 @@
 import { mapActions, mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
+import headImg from "@/assets/common/head.jpg";
 
 export default {
   // created() {
@@ -62,6 +63,11 @@ export default {
       await this.$store.dispatch("user/logout");
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     },
+  },
+  data() {
+    return {
+      defaultImg: headImg,
+    };
   },
 };
 </script>

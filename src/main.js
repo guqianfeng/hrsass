@@ -25,6 +25,14 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$request = request;
 
+Vue.directive("imgerror", {
+  inserted(el, binding) {
+    el.onerror = () => {
+      el.src = binding.value;
+    };
+  },
+});
+
 new Vue({
   el: "#app",
   router,
