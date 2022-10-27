@@ -5,6 +5,8 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import approvalsRouter from '@/router/modules/approvals'
+import attendancesRouter from '@/router/modules/attendances'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -57,30 +59,8 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/approvals',
-    component: Layout,
-    children: [
-      {
-        path: 'approvals',
-        name: 'Approvals',
-        component: () => import('@/views/approvals/index'),
-        meta: { title: '审批', icon: 'dashboard' }
-      }
-    ]
-  },
-  {
-    path: '/attendances',
-    component: Layout,
-    children: [
-      {
-        path: 'attendances',
-        name: 'attendances',
-        component: () => import('@/views/attendances/index'),
-        meta: { title: '考勤', icon: 'dashboard' }
-      }
-    ]
-  },
+  approvalsRouter,
+  attendancesRouter,
   { path: '/playground', hidden: false, component: () => import('@/views/playground') },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
