@@ -12,7 +12,7 @@
           </template>
         </el-tree>
       </el-card>
-      <add-dept :dept-list="deptList" :dialog-visible="dialogVisible" :node-data="nodeData" @close-dialog="dialogVisible = $event" />
+      <add-dept ref="addDept" :dept-list="deptList" :dialog-visible="dialogVisible" :node-data="nodeData" @close-dialog="dialogVisible = $event" />
     </div>
   </div>
 </template>
@@ -53,6 +53,9 @@ export default {
     handleAddDepts(nodeData) {
       this.dialogVisible = true
       this.nodeData = nodeData
+      // 发送请求
+      // console.log('发送请求')
+      this.$refs.addDept.getUserSimpleList()
     }
   }
 }

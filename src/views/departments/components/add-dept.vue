@@ -1,6 +1,6 @@
 <template>
   <!-- 新增部门的弹层 -->
-  <el-dialog title="新增部门" :visible="dialogVisible" @close="handleCloseDialog">
+  <el-dialog title="新增部门" :visible="dialogVisible" @close="handleCloseDialog" @open="handleOpenDialog">
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
     <!-- 校验 4项 :model :rules prop v-model -->
@@ -82,9 +82,18 @@ export default {
       }
     }
   },
+  created() {
+    // this.getUserSimpleList()
+  },
   methods: {
     handleCloseDialog() {
       this.$emit('close-dialog', false)
+    },
+    getUserSimpleList() {
+      console.log('发送请求')
+    },
+    handleOpenDialog() {
+      console.log('open 发送请求')
     }
   }
 }
