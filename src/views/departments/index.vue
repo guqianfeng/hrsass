@@ -8,7 +8,7 @@
         <!-- 内容 -->
         <el-tree :data="departs" :props="defaultProps" default-expand-all>
           <template #default="{data}">
-            <tree-tools :node-data="data" />
+            <tree-tools :node-data="data" @del-depts="getDepartments" />
           </template>
         </el-tree>
       </el-card>

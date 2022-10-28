@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { reqDeleteDept } from '@/api/departments'
 export default {
   props: {
     nodeData: {
@@ -46,7 +47,16 @@ export default {
           console.log('add')
           break
         case 'del':
-          console.log('del')
+          this.$confirm('此操作将永久删除该部门，是否继续', '温馨提示').then(async() => {
+            // 确认删除
+            // console.log('del', this.nodeData.id)
+            await reqDeleteDept(this.nodeData.id)
+            this.$message.success('删除成功')
+            this.$emit('del-depts')
+          }).catch(() => {
+            // 取消删除
+            console.log('cancel del')
+          })
           break
         case 'edit':
           console.log('edit')
