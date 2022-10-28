@@ -28,7 +28,33 @@
           </el-col>
         </el-row>
         <!-- 内容 -->
-        <el-tree :data="list" :props="defaultProps" default-expand-all />
+        <el-tree :data="departs" :props="defaultProps" default-expand-all>
+          <template #default="{data}">
+            <el-row type="flex" justify="space-between" align="middle" style="height: 40px; width: 100%">
+              <el-col :span="20">
+                <span>{{ data.name }}</span>
+              </el-col>
+              <el-col :span="4">
+                <el-row type="flex">
+                  <!-- 两个内容 -->
+                  <el-col :span="12">{{ data.manager }}</el-col>
+                  <el-col :span="12">
+                    <!-- 下拉菜单 element -->
+                    <el-dropdown>
+                      <span>
+                        操作<i class="el-icon-arrow-down" />
+                      </span>
+                      <!-- 下拉菜单 -->
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>添加子部门</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </el-col>
+                </el-row>
+              </el-col>
+            </el-row>
+          </template>
+        </el-tree>
       </el-card>
     </div>
   </div>
@@ -39,28 +65,16 @@ export default {
   name: 'Departments',
   data() {
     return {
-      list: [
+      departs: [
         {
-          name: 'A组',
-          child: [
-            { name: 'A-1组', child: [
-              { name: '张三' },
-              { name: '张三' },
-              { name: '张三' }
-            ] },
-            { name: 'A-2组' },
-            { name: 'A-3组' }
-          ]
+          name: '总裁办',
+          manager: '曹操',
+          children: [{ name: '董事会', manager: '曹丕' }]
         },
-        {
-          name: 'B组'
-        },
-        {
-          name: 'C组'
-        }
+        { name: '行政部', manager: '刘备' },
+        { name: '人事部', manager: '孙权' }
       ],
       defaultProps: {
-        children: 'child',
         label: 'name'
       }
     }
