@@ -22,9 +22,13 @@ export const reqDeleteDept = (id) => {
 }
 
 /**
- * 获取员工简单列表
+ * 添加部门
+ * @param {*} data
  * @returns
  */
-export const reqGetUserSimpleList = () => request({
-  url: '/sys/user/simple'
+export const reqAddDept = (data) => request({
+  url: '/company/department',
+  method: 'POST',
+  data
 })
+

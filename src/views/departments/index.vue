@@ -12,7 +12,7 @@
           </template>
         </el-tree>
       </el-card>
-      <add-dept ref="addDept" :dept-list="deptList" :dialog-visible="dialogVisible" :node-data="nodeData" @close-dialog="dialogVisible = $event" />
+      <add-dept ref="addDept" :dept-list="deptList" :dialog-visible="dialogVisible" :node-data="nodeData" @close-dialog="dialogVisible = $event" @add-depts="getDepartments" />
     </div>
   </div>
 </template>

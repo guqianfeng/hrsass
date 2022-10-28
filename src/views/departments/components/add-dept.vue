@@ -4,7 +4,7 @@
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
     <!-- 校验 4项 :model :rules prop v-model -->
-    <el-form label-width="120px" :model="form" :rules="rules">
+    <el-form ref="form" label-width="120px" :model="form" :rules="rules">
       <el-form-item label="部门名称" prop="name">
         <el-input v-model="form.name" style="width:80%" placeholder="1-50个字符" />
       </el-form-item>
@@ -22,14 +22,15 @@
     </el-form>
     <!-- el-dialog有专门放置底部操作栏的 插槽  具名插槽 -->
     <div slot="footer">
-      <el-button type="primary" size="small">确定</el-button>
+      <el-button type="primary" size="small" @click="addDeptFn">确定</el-button>
       <el-button size="small">取消</el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
-import { reqGetUserSimpleList } from '@/api/departments'
+import { reqGetUserSimpleList } from '@/api/user'
+import { reqAddDept } from '@/api/departments'
 export default {
   props: {
     dialogVisible: {
@@ -99,6 +100,18 @@ export default {
     },
     handleOpenDialog() {
     //   console.log('open 发送请求')
+    },
+    addDeptFn() {
+      this.$refs.form.validate(async flag => {
+        if (!flag) return
+        await reqAddDept({
+          ...this.form,
+          pid: this.nodeData.id
+        })
+        this.$message.success('添加部门成功')
+        this.handleCloseDialog()
+        this.$emit('add-depts')
+      })
     }
   }
 }

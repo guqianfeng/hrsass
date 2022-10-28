@@ -26,3 +26,12 @@ export const reqGetBaseInfo = (id) => {
     url: `/sys/user/${id}`
   })
 }
+
+/**
+ * 获取员工简单列表
+ * @returns
+ */
+export const reqGetUserSimpleList = () => request({
+  url: '/sys/user/simple'
+})
+
