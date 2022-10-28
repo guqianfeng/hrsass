@@ -28,7 +28,7 @@
           </el-col>
         </el-row>
         <!-- 内容 -->
-        <el-tree :data="list" />
+        <el-tree :data="list" :props="defaultProps" default-expand-all />
       </el-card>
     </div>
   </div>
@@ -41,24 +41,28 @@ export default {
     return {
       list: [
         {
-          label: 'A组',
-          children: [
-            { label: 'A-1组', children: [
-              { label: '张三' },
-              { label: '张三' },
-              { label: '张三' }
+          name: 'A组',
+          child: [
+            { name: 'A-1组', child: [
+              { name: '张三' },
+              { name: '张三' },
+              { name: '张三' }
             ] },
-            { label: 'A-2组' },
-            { label: 'A-3组' }
+            { name: 'A-2组' },
+            { name: 'A-3组' }
           ]
         },
         {
-          label: 'B组'
+          name: 'B组'
         },
         {
-          label: 'C组'
+          name: 'C组'
         }
-      ]
+      ],
+      defaultProps: {
+        children: 'child',
+        label: 'name'
+      }
     }
   }
 }
