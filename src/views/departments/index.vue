@@ -2,6 +2,7 @@
   <div class="departments-container">
     <div class="app-container">
       <el-card class="tree-card">
+        <!-- 头部 -->
         <!-- 用了一个行列布局 -->
         <el-row type="flex" justify="space-between" align="middle" style="height: 40px">
           <el-col :span="20">
@@ -26,6 +27,8 @@
             </el-row>
           </el-col>
         </el-row>
+        <!-- 内容 -->
+        <el-tree :data="list" />
       </el-card>
     </div>
   </div>
@@ -33,7 +36,31 @@
 
 <script>
 export default {
-  name: 'Departments'
+  name: 'Departments',
+  data() {
+    return {
+      list: [
+        {
+          label: 'A组',
+          children: [
+            { label: 'A-1组', children: [
+              { label: '张三' },
+              { label: '张三' },
+              { label: '张三' }
+            ] },
+            { label: 'A-2组' },
+            { label: 'A-3组' }
+          ]
+        },
+        {
+          label: 'B组'
+        },
+        {
+          label: 'C组'
+        }
+      ]
+    }
+  }
 }
 </script>
 
