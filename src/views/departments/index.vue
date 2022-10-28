@@ -12,6 +12,7 @@
           </template>
         </el-tree>
       </el-card>
+      <add-dept :dialog-visible="dialogVisible" />
     </div>
   </div>
 </template>
@@ -20,17 +21,19 @@
 import treeTools from './components/tree-tools.vue'
 import { reqGetDepartments } from '@/api/departments'
 import { transListToTreeData } from '@/utils'
+import AddDept from './components/add-dept.vue'
 
 export default {
   name: 'Departments',
-  components: { treeTools },
+  components: { treeTools, AddDept },
   data() {
     return {
       company: { name: '江苏传智播客教育科技股份有限公司', manager: '负责人' },
       departs: [],
       defaultProps: {
         label: 'name'
-      }
+      },
+      dialogVisible: false
     }
   },
   created() {
