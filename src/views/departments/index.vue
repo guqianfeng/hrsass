@@ -8,7 +8,7 @@
         <!-- 内容 -->
         <el-tree :data="departs" :props="defaultProps" default-expand-all>
           <template #default="{data}">
-            <tree-tools :node-data="data" @del-depts="getDepartments" />
+            <tree-tools :node-data="data" @del-depts="getDepartments" @add-depts="handleAddDepts" />
           </template>
         </el-tree>
       </el-card>
@@ -33,7 +33,8 @@ export default {
       defaultProps: {
         label: 'name'
       },
-      dialogVisible: true
+      dialogVisible: false,
+      nodeData: {}
     }
   },
   created() {
@@ -45,6 +46,10 @@ export default {
       const treeData = transListToTreeData(depts, '')
       this.company.name = companyName
       this.departs = treeData
+    },
+    handleAddDepts(nodeData) {
+      this.dialogVisible = true
+      this.nodeData = nodeData
     }
   }
 }

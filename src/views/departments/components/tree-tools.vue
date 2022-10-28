@@ -44,7 +44,7 @@ export default {
       // console.log(cmd)
       switch (cmd) {
         case 'add':
-          console.log('add')
+          this.$emit('add-depts', this.nodeData)
           break
         case 'del':
           this.$confirm('此操作将永久删除该部门，是否继续', '温馨提示').then(async() => {
