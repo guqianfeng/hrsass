@@ -12,7 +12,9 @@
         <el-input v-model="form.code" style="width:80%" placeholder="1-50个字符" />
       </el-form-item>
       <el-form-item label="部门负责人" prop="manager">
-        <el-select v-model="form.manager" style="width:80%" placeholder="请选择" />
+        <el-select v-model="form.manager" style="width:80%" placeholder="请选择">
+          <el-option v-for="item in userList" :key="item.id" :label="item.username" :value="item.username" />
+        </el-select>
       </el-form-item>
       <el-form-item label="部门介绍" prop="introduce">
         <el-input v-model="form.introduce" style="width:80%" placeholder="1-300个字符" type="textarea" :rows="3" />
@@ -27,6 +29,7 @@
 </template>
 
 <script>
+import { reqGetUserSimpleList } from '@/api/departments'
 export default {
   props: {
     dialogVisible: {
@@ -55,6 +58,7 @@ export default {
       isRepeat ? callback('部门编码已存在') : callback()
     }
     return {
+      userList: [],
       form: {
         name: '',
         code: '',
@@ -89,11 +93,12 @@ export default {
     handleCloseDialog() {
       this.$emit('close-dialog', false)
     },
-    getUserSimpleList() {
-      console.log('发送请求')
+    async getUserSimpleList() {
+      const res = await reqGetUserSimpleList()
+      this.userList = res.data
     },
     handleOpenDialog() {
-      console.log('open 发送请求')
+    //   console.log('open 发送请求')
     }
   }
 }
