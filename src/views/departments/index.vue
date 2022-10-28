@@ -19,6 +19,20 @@
 <script>
 import treeTools from './components/tree-tools.vue'
 import { reqGetDepartments } from '@/api/departments'
+function transListToTree(list, value) {
+  const arr = []
+  // console.log({ list, value })
+  list.forEach(item => {
+    if (item.pid === value) {
+      const children = transListToTree(list, item.id)
+      if (children.length) {
+        item.children = children
+      }
+      arr.push(item)
+    }
+  })
+  return arr
+}
 export default {
   name: 'Departments',
   components: { treeTools },
@@ -37,7 +51,8 @@ export default {
   methods: {
     async getDepartments() {
       const { data: { depts }} = await reqGetDepartments()
-      this.departs = depts
+      const treeData = transListToTree(depts, '')
+      this.departs = treeData
     }
   }
 }
