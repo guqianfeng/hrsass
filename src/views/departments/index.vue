@@ -12,7 +12,7 @@
           </template>
         </el-tree>
       </el-card>
-      <add-dept :dialog-visible="dialogVisible" :node-data="nodeData" @close-dialog="dialogVisible = $event" />
+      <add-dept :dept-list="deptList" :dialog-visible="dialogVisible" :node-data="nodeData" @close-dialog="dialogVisible = $event" />
     </div>
   </div>
 </template>
@@ -34,7 +34,8 @@ export default {
         label: 'name'
       },
       dialogVisible: false,
-      nodeData: {}
+      nodeData: {},
+      deptList: []
     }
   },
   created() {
@@ -43,6 +44,7 @@ export default {
   methods: {
     async getDepartments() {
       const { data: { depts, companyName }} = await reqGetDepartments()
+      this.deptList = depts
       const treeData = transListToTreeData(depts, '')
       this.company.name = companyName
       this.departs = treeData

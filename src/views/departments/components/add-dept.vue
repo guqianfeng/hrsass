@@ -36,6 +36,10 @@ export default {
     nodeData: {
       type: Object,
       required: true
+    },
+    deptList: {
+      type: Array,
+      required: true
     }
   },
   data() {
@@ -44,6 +48,10 @@ export default {
       const arr = this.nodeData.children
       const isRepeat = arr.some(item => item.name === value)
       isRepeat ? callback(new Error('部门名重复')) : callback()
+    }
+    const validatorCode = (values, value, callback) => {
+      const isRepeat = this.deptList.some(item => item.code === value)
+      isRepeat ? callback('部门编码已存在') : callback()
     }
     return {
       form: {
@@ -60,7 +68,8 @@ export default {
         ],
         code: [
           { required: true, message: '请填写部门编码', trigger: ['blur', 'change'] },
-          { min: 1, max: 50, message: '部门编码1-50个字符', trigger: ['blur', 'change'] }
+          { min: 1, max: 50, message: '部门编码1-50个字符', trigger: ['blur', 'change'] },
+          { validator: validatorCode, trigger: ['blur'] }
         ],
         manager: [
           { required: true, message: '请选择部门负责人', trigger: ['blur', 'change'] }
