@@ -4,7 +4,7 @@
       <el-card class="tree-card">
         <!-- 头部 -->
         <!-- 用了一个行列布局 -->
-        <tree-tools :node-data="company" is-root />
+        <tree-tools :node-data="company" is-root @add-depts="handleAddDepts" />
         <!-- 内容 -->
         <el-tree :data="departs" :props="defaultProps" default-expand-all>
           <template #default="{data}">
@@ -47,6 +47,7 @@ export default {
       this.deptList = depts
       const treeData = transListToTreeData(depts, '')
       this.company.name = companyName
+      this.company.id = ''
       this.departs = treeData
     },
     handleAddDepts(nodeData) {

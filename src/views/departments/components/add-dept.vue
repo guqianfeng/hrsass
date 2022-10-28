@@ -45,7 +45,8 @@ export default {
   data() {
     const validatorName = (rules, value, callback) => {
     //   console.log(value, this.nodeData)
-      const arr = this.nodeData.children
+    //   const arr = this.nodeData.children
+      const arr = this.deptList.filter(item => item.pid === this.nodeData.id)
       const isRepeat = arr.some(item => item.name === value)
       isRepeat ? callback(new Error('部门名重复')) : callback()
     }
