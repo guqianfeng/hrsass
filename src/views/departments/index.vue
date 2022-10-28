@@ -12,7 +12,7 @@
           </template>
         </el-tree>
       </el-card>
-      <add-dept :dialog-visible="dialogVisible" />
+      <add-dept :dialog-visible="dialogVisible" @close-dialog="dialogVisible = $event" />
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
       defaultProps: {
         label: 'name'
       },
-      dialogVisible: false
+      dialogVisible: true
     }
   },
   created() {

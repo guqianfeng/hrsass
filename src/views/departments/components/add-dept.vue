@@ -2,6 +2,7 @@
   <el-dialog
     title="温馨提示"
     :visible="dialogVisible"
+    @close="closeDialog"
   >
     <span>这是一段信息</span>
     <template #footer>
@@ -17,6 +18,11 @@ export default {
     dialogVisible: {
       type: Boolean,
       default: false
+    }
+  },
+  methods: {
+    closeDialog() {
+      this.$emit('close-dialog', false)
     }
   }
 }
