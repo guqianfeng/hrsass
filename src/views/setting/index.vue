@@ -6,7 +6,7 @@
           <el-tab-pane label="角色管理" name="role">
             <el-button type="primary" size="small">+ 新增角色</el-button>
             <el-table :data="list">
-              <el-table-column label="序号" type="index" width="80" />
+              <el-table-column label="序号" type="index" width="80" :index="indexMethod" />
               <el-table-column label="角色名称" prop="name" width="120" />
               <el-table-column label="描述" prop="description" />
               <el-table-column label="操作">
@@ -64,6 +64,9 @@ export default {
     handleCurrentChange(val) {
       this.page = val
       this.getRoleList()
+    },
+    indexMethod(index) {
+      return index + 1 + (this.page - 1) * this.pagesize
     }
   }
 }
