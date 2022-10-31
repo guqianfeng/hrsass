@@ -51,7 +51,18 @@ export default {
     const validatorName = (rules, value, callback) => {
     //   console.log(value, this.nodeData)
     //   const arr = this.nodeData.children
-      const arr = this.deptList.filter(item => item.pid === this.nodeData.id)
+      let arr = []
+      if (!this.form.id) {
+        // 新增
+        arr = this.deptList.filter(item => item.pid === this.nodeData.id)
+      } else {
+        // 编辑
+        if (value === this.nodeData.name) {
+          callback()
+          return
+        }
+        arr = this.deptList.filter(item => item.pid === this.nodeData.pid)
+      }
       const isRepeat = arr.some(item => item.name === value)
       isRepeat ? callback(new Error('部门名重复')) : callback()
     }
