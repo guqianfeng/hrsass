@@ -31,7 +31,7 @@
 
 <script>
 import { reqGetUserSimpleList } from '@/api/user'
-import { reqAddDept } from '@/api/departments'
+import { reqAddDept, reqGetDepartDetail } from '@/api/departments'
 export default {
   props: {
     dialogVisible: {
@@ -102,8 +102,12 @@ export default {
       const res = await reqGetUserSimpleList()
       this.userList = res.data
     },
+    async getDeptDetail() {
+      const res = await reqGetDepartDetail(this.nodeData.id)
+      this.form = res.data
+    },
     handleOpenDialog() {
-      console.log('open 发送请求')
+      // console.log('open 发送请求')
       this.getUserSimpleList()
     },
     addDeptFn() {

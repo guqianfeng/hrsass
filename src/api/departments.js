@@ -32,3 +32,11 @@ export const reqAddDept = (data) => request({
   data
 })
 
+/** *
+ * 获取部门详情
+ * ***/
+export function reqGetDepartDetail(id) {
+  return request({
+    url: `/company/department/${id}`
+  })
+}
