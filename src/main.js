@@ -18,6 +18,9 @@ import request from '@/utils/request'
 // import { imgerror, color } from "@/directives";
 import * as directives from '@/directives'
 
+import PageTools from '@/components/PageTools'
+Vue.component('PageTools', PageTools)
+
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
