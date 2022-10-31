@@ -55,7 +55,11 @@ export default {
       const isRepeat = arr.some(item => item.name === value)
       isRepeat ? callback(new Error('部门名重复')) : callback()
     }
-    const validatorCode = (values, value, callback) => {
+    const validatorCode = (rules, value, callback) => {
+      if (this.form.id && value === this.nodeData.code) {
+        callback()
+        return
+      }
       const isRepeat = this.deptList.some(item => item.code === value)
       isRepeat ? callback('部门编码已存在') : callback()
     }
