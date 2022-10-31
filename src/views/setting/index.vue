@@ -12,7 +12,7 @@
               <el-table-column label="操作">
                 <template #default="{row}">
                   <el-button type="text" size="small">分配权限</el-button>
-                  <el-button type="text" size="small">编辑</el-button>
+                  <el-button type="text" size="small" @click="edit(row.id)">编辑</el-button>
                   <el-button type="text" size="small" @click="del(row.id)">删除</el-button>
                 </template>
               </el-table-column>
@@ -32,7 +32,7 @@
         </el-tabs>
       </el-card>
       <el-dialog
-        title="提示"
+        :title="showTitle"
         :visible="dialogVisible"
         @close="closeDialog"
       >
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { reqAddRole, reqDelRole, reqGetRoleList } from '@/api/setting'
+import { reqAddRole, reqDelRole, reqGetRoleDetail, reqGetRoleList, reqUpdateRole } from '@/api/setting'
 export default {
   name: 'Setting',
   data() {
@@ -78,6 +78,11 @@ export default {
           required: true, message: '请填写角色描述', trigger: ['blur', 'change']
         }]
       }
+    }
+  },
+  computed: {
+    showTitle() {
+      return this.form.id ? '编辑角色' : '新增角色'
     }
   },
   created() {
@@ -117,6 +122,11 @@ export default {
         console.log('取消删除')
       })
     },
+    async edit(id) {
+      this.dialogVisible = true
+      const { data } = await reqGetRoleDetail(id)
+      this.form = data
+    },
     closeDialog() {
       this.dialogVisible = false
       this.$refs.form.resetFields()
@@ -125,8 +135,13 @@ export default {
     clickSubmit() {
       this.$refs.form.validate(async flag => {
         if (!flag) return
-        await reqAddRole(this.form)
-        this.$message.success('添加角色成功')
+        if (!this.form.id) {
+          await reqAddRole(this.form)
+          this.$message.success('添加角色成功')
+        } else {
+          await reqUpdateRole(this.form)
+          this.$message.success('修改角色成功')
+        }
         this.closeDialog()
         this.getRoleList()
       })
