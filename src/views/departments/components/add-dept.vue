@@ -31,7 +31,7 @@
 
 <script>
 import { reqGetUserSimpleList } from '@/api/user'
-import { reqAddDept, reqGetDepartDetail } from '@/api/departments'
+import { reqAddDept, reqGetDepartDetail, reqUpdateDeptDetail } from '@/api/departments'
 export default {
   props: {
     dialogVisible: {
@@ -119,11 +119,16 @@ export default {
     addDeptFn() {
       this.$refs.form.validate(async flag => {
         if (!flag) return
-        await reqAddDept({
-          ...this.form,
-          pid: this.nodeData.id
-        })
-        this.$message.success('添加部门成功')
+        if (!this.form.id) {
+          await reqAddDept({
+            ...this.form,
+            pid: this.nodeData.id
+          })
+          this.$message.success('添加部门成功')
+        } else {
+          await reqUpdateDeptDetail(this.form)
+          this.$message.success('编辑部门成功')
+        }
         this.handleCloseDialog()
         this.$emit('add-depts')
       })

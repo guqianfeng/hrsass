@@ -40,3 +40,16 @@ export function reqGetDepartDetail(id) {
     url: `/company/department/${id}`
   })
 }
+
+/**
+ * 编辑部门详情
+ * @param {*} form
+ * @returns
+ */
+export function reqUpdateDeptDetail(form) {
+  return request({
+    url: `/company/department/${form.id}`,
+    method: 'PUT',
+    data: form
+  })
+}
