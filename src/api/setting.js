@@ -24,3 +24,14 @@ export const reqDelRole = (id) => request({
   url: `/sys/role/${id}`,
   method: 'delete'
 })
+
+/**
+ * 添加角色
+ * @param {*} form
+ * @returns
+ */
+export const reqAddRole = (form) => request({
+  url: '/sys/role',
+  method: 'post',
+  data: form
+})

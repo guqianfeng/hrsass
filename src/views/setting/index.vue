@@ -46,7 +46,7 @@
         </el-form>
         <template #footer>
           <el-button>取消</el-button>
-          <el-button type="primary">确认</el-button>
+          <el-button type="primary" @click="clickSubmit">确认</el-button>
         </template>
       </el-dialog>
     </div>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { reqDelRole, reqGetRoleList } from '@/api/setting'
+import { reqAddRole, reqDelRole, reqGetRoleList } from '@/api/setting'
 export default {
   name: 'Setting',
   data() {
@@ -73,6 +73,9 @@ export default {
       rules: {
         name: [{
           required: true, message: '请填写角色名称', trigger: ['blur', 'change']
+        }],
+        description: [{
+          required: true, message: '请填写角色描述', trigger: ['blur', 'change']
         }]
       }
     }
@@ -117,6 +120,16 @@ export default {
     closeDialog() {
       this.dialogVisible = false
       this.$refs.form.resetFields()
+      this.form.id = ''
+    },
+    clickSubmit() {
+      this.$refs.form.validate(async flag => {
+        if (!flag) return
+        await reqAddRole(this.form)
+        this.$message.success('添加角色成功')
+        this.closeDialog()
+        this.getRoleList()
+      })
     }
   }
 }
