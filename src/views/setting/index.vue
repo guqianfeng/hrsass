@@ -15,6 +15,16 @@
                 <el-button type="text" size="small">删除</el-button>
               </el-table-column>
             </el-table>
+
+            <el-pagination
+              :current-page="page"
+              :page-sizes="[1, 2, 3, 4]"
+              :page-size="pagesize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="total"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+            />
           </el-tab-pane>
           <el-tab-pane label="公司信息" name="company">公司信息</el-tab-pane>
         </el-tabs>
@@ -45,6 +55,15 @@ export default {
       // console.log({ rows, total })
       this.list = rows
       this.total = total
+    },
+    handleSizeChange(val) {
+      this.pagesize = val
+      this.page = 1
+      this.getRoleList()
+    },
+    handleCurrentChange(val) {
+      this.page = val
+      this.getRoleList()
     }
   }
 }
