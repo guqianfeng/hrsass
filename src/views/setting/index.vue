@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { reqGetRoleList } from '@/api/setting'
+import { reqDelRole, reqGetRoleList } from '@/api/setting'
 export default {
   name: 'Setting',
   data() {
@@ -74,7 +74,17 @@ export default {
       return index + 1 + (this.page - 1) * this.pagesize
     },
     del(id) {
-      console.log(id)
+      this.$confirm('确定要删除该角色吗', '温馨提示').then(async() => {
+        await reqDelRole(id)
+        // console.log(res)
+        this.$message.success('删除成功')
+        if (this.list.length === 1 && this.page > 1) {
+          this.page--
+        }
+        this.getRoleList()
+      }).catch(() => {
+        console.log('取消删除')
+      })
     }
   }
 }
