@@ -1,7 +1,7 @@
 <template>
   <div class="setting-container">
     <div class="app-container">
-      <el-card>
+      <el-card v-loading="isLoading">
         <el-tabs v-model="activeName">
           <el-tab-pane label="角色管理" name="role">
             <el-button type="primary" size="small">+ 新增角色</el-button>
@@ -43,7 +43,8 @@ export default {
       page: 1,
       pagesize: 3,
       list: [],
-      total: 0
+      total: 0,
+      isLoading: false
     }
   },
   created() {
@@ -51,10 +52,12 @@ export default {
   },
   methods: {
     async getRoleList() {
+      this.isLoading = true
       const { data: { rows, total }} = await reqGetRoleList(this.page, this.pagesize)
       // console.log({ rows, total })
       this.list = rows
       this.total = total
+      this.isLoading = false
     },
     handleSizeChange(val) {
       this.pagesize = val
