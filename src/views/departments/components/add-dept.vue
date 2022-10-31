@@ -23,7 +23,7 @@
     <!-- el-dialog有专门放置底部操作栏的 插槽  具名插槽 -->
     <div slot="footer">
       <el-button type="primary" size="small" @click="addDeptFn">确定</el-button>
-      <el-button size="small">取消</el-button>
+      <el-button size="small" @click="handleCloseDialog">取消</el-button>
     </div>
   </el-dialog>
 </template>
@@ -94,6 +94,7 @@ export default {
     handleCloseDialog() {
       // this.$emit('close-dialog', false)
       this.$emit('update:dialogVisible', false)
+      this.$refs.form.resetFields()
     },
     async getUserSimpleList() {
       const res = await reqGetUserSimpleList()
