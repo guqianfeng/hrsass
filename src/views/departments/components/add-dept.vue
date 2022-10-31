@@ -92,7 +92,8 @@ export default {
   },
   methods: {
     handleCloseDialog() {
-      this.$emit('close-dialog', false)
+      // this.$emit('close-dialog', false)
+      this.$emit('update:dialogVisible', false)
     },
     async getUserSimpleList() {
       const res = await reqGetUserSimpleList()
