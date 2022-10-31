@@ -60,7 +60,7 @@ export default {
       isRepeat ? callback('部门编码已存在') : callback()
     }
     return {
-      showTitle: '',
+      // showTitle: '大标题',
       userList: [],
       form: {
         name: '',
@@ -87,6 +87,11 @@ export default {
           { min: 1, max: 300, message: '部门介绍1-300个字符', trigger: ['blur', 'change'] }
         ]
       }
+    }
+  },
+  computed: {
+    showTitle() {
+      return this.form.id ? '编辑部门' : '添加子部门'
     }
   },
   created() {
