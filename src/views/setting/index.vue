@@ -33,10 +33,21 @@
       </el-card>
       <el-dialog
         title="提示"
-        :visible.sync="dialogVisible"
+        :visible="dialogVisible"
+        @close="closeDialog"
       >
-        <span>这是一段信息</span>
-
+        <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+          <el-form-item label="角色名称" prop="name">
+            <el-input v-model="form.name" placeholder="请填入角色名称" />
+          </el-form-item>
+          <el-form-item label="角色描述" prop="description">
+            <el-input v-model="form.description" placeholder="请填入角色描述" />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <el-button>取消</el-button>
+          <el-button type="primary">确认</el-button>
+        </template>
       </el-dialog>
     </div>
   </div>
@@ -54,7 +65,16 @@ export default {
       list: [],
       total: 0,
       isLoading: false,
-      dialogVisible: false
+      dialogVisible: false,
+      form: {
+        name: '',
+        description: ''
+      },
+      rules: {
+        name: [{
+          required: true, message: '请填写角色名称', trigger: ['blur', 'change']
+        }]
+      }
     }
   },
   created() {
@@ -93,6 +113,10 @@ export default {
       }).catch(() => {
         console.log('取消删除')
       })
+    },
+    closeDialog() {
+      this.dialogVisible = false
+      this.$refs.form.resetFields()
     }
   }
 }
