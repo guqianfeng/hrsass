@@ -14,3 +14,13 @@ export const reqGetRoleList = (page, pagesize = 10) => request({
     pagesize
   }
 })
+
+/**
+ * 删除角色
+ * @param {*} id
+ * @returns
+ */
+export const reqDelRole = (id) => request({
+  url: `/sys/role/${id}`,
+  method: 'delete'
+})

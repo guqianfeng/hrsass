@@ -10,9 +10,11 @@
               <el-table-column label="角色名称" prop="name" width="120" />
               <el-table-column label="描述" prop="description" />
               <el-table-column label="操作">
-                <el-button type="text" size="small">分配权限</el-button>
-                <el-button type="text" size="small">编辑</el-button>
-                <el-button type="text" size="small">删除</el-button>
+                <template #default="{row}">
+                  <el-button type="text" size="small">分配权限</el-button>
+                  <el-button type="text" size="small">编辑</el-button>
+                  <el-button type="text" size="small" @click="del(row.id)">删除</el-button>
+                </template>
               </el-table-column>
             </el-table>
 
@@ -70,6 +72,9 @@ export default {
     },
     indexMethod(index) {
       return index + 1 + (this.page - 1) * this.pagesize
+    },
+    del(id) {
+      console.log(id)
     }
   }
 }
