@@ -56,11 +56,13 @@ export default {
       // 发送请求
       // console.log('发送请求')
       // this.$refs.addDept.getUserSimpleList()
+      this.$refs.addDept.showTitle = '新增部门'
     },
     handleEditDepts(nodeData) {
       this.dialogVisible = true
       this.nodeData = nodeData
       // this.$refs.addDept.getUserSimpleList()
+      this.$refs.addDept.showTitle = '修改部门'
     }
   }
 }

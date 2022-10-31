@@ -1,6 +1,7 @@
 <template>
   <!-- 新增部门的弹层 -->
-  <el-dialog title="新增部门" :visible="dialogVisible" @close="handleCloseDialog" @open="handleOpenDialog">
+  <el-dialog :title="showTitle" :visible="dialogVisible" @close="handleCloseDialog" @open="handleOpenDialog">
+    <!-- {{ nodeData }} -->
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
     <!-- 校验 4项 :model :rules prop v-model -->
@@ -59,6 +60,7 @@ export default {
       isRepeat ? callback('部门编码已存在') : callback()
     }
     return {
+      showTitle: '',
       userList: [],
       form: {
         name: '',
