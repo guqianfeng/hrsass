@@ -24,12 +24,25 @@
 </template>
 
 <script>
+import { reqGetRoleList } from '@/api/setting'
 export default {
   name: 'Setting',
   data() {
     return {
       activeName: 'role',
-      list: []
+      list: [],
+      page: 1,
+      pagesize: 3,
+      total: 0
+    }
+  },
+  created() {
+    this.getRoleList()
+  },
+  methods: {
+    async getRoleList() {
+      const { data: { rows, total }} = await reqGetRoleList(this.page, this.pagesize)
+      console.log({ rows, total })
     }
   }
 }
