@@ -4,7 +4,7 @@
       <el-card v-loading="isLoading">
         <el-tabs v-model="activeName">
           <el-tab-pane label="角色管理" name="role">
-            <el-button type="primary" size="small">+ 新增角色</el-button>
+            <el-button type="primary" size="small" @click="dialogVisible = true">+ 新增角色</el-button>
             <el-table :data="list">
               <el-table-column label="序号" type="index" width="80" :index="indexMethod" />
               <el-table-column label="角色名称" prop="name" width="120" />
@@ -31,6 +31,13 @@
           <el-tab-pane label="公司信息" name="company">公司信息</el-tab-pane>
         </el-tabs>
       </el-card>
+      <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible"
+      >
+        <span>这是一段信息</span>
+
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -46,7 +53,8 @@ export default {
       pagesize: 3,
       list: [],
       total: 0,
-      isLoading: false
+      isLoading: false,
+      dialogVisible: false
     }
   },
   created() {
