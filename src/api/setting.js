@@ -35,3 +35,23 @@ export const reqAddRole = (form) => request({
   method: 'post',
   data: form
 })
+
+/**
+ * 根据ID获取角色详情
+ * @param {*} id
+ * @returns
+ */
+export const reqGetRoleDetail = (id) => request({
+  url: `/sys/role/${id}`
+})
+
+/**
+ * 更新角色
+ * @param {*} form
+ * @returns
+ */
+export const reqUpdateRole = (form) => request({
+  url: `/sys/role/${form.id}`,
+  method: 'put',
+  data: form
+})

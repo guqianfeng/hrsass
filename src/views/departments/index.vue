@@ -20,7 +20,7 @@
 <script>
 import treeTools from './components/tree-tools.vue'
 import { reqGetDepartments } from '@/api/departments'
-import { delay, transListToTreeData } from '@/utils'
+import { transListToTreeData } from '@/utils'
 import AddDept from './components/add-dept.vue'
 
 export default {
