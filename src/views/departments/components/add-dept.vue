@@ -102,6 +102,7 @@ export default {
       // this.$emit('close-dialog', false)
       this.$emit('update:dialogVisible', false)
       this.$refs.form.resetFields()
+      this.form.id = ''
     },
     async getUserSimpleList() {
       const res = await reqGetUserSimpleList()
