@@ -2,6 +2,8 @@
  * Created by PanJiaChen on 16/11/18.
  */
 
+import { setTimeout } from 'core-js'
+
 /**
  * Parse the time to string
  * @param {(Object|string|number)} time
@@ -130,3 +132,9 @@ export function transListToTreeData(list, value) {
   })
   return arr
 }
+
+export const delay = time => new Promise(resolve => {
+  setTimeout(() => {
+    resolve()
+  }, time)
+})

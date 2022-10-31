@@ -1,7 +1,7 @@
 <template>
   <div class="departments-container">
     <div class="app-container">
-      <el-card class="tree-card">
+      <el-card v-loading="loading" class="tree-card">
         <!-- 头部 -->
         <!-- 用了一个行列布局 -->
         <tree-tools :node-data="company" is-root @add-depts="handleAddDepts" />
@@ -20,7 +20,7 @@
 <script>
 import treeTools from './components/tree-tools.vue'
 import { reqGetDepartments } from '@/api/departments'
-import { transListToTreeData } from '@/utils'
+import { delay, transListToTreeData } from '@/utils'
 import AddDept from './components/add-dept.vue'
 
 export default {
@@ -35,7 +35,8 @@ export default {
       },
       dialogVisible: false,
       nodeData: {},
-      deptList: []
+      deptList: [],
+      loading: false
     }
   },
   created() {
@@ -43,7 +44,10 @@ export default {
   },
   methods: {
     async getDepartments() {
+      this.loading = true
+      // await delay(2000)
       const { data: { depts, companyName }} = await reqGetDepartments()
+      this.loading = false
       this.deptList = depts
       const treeData = transListToTreeData(depts, '')
       this.company.name = companyName
