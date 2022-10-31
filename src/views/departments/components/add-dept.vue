@@ -101,7 +101,8 @@ export default {
       this.userList = res.data
     },
     handleOpenDialog() {
-    //   console.log('open 发送请求')
+      console.log('open 发送请求')
+      this.getUserSimpleList()
     },
     addDeptFn() {
       this.$refs.form.validate(async flag => {

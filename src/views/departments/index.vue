@@ -8,7 +8,7 @@
         <!-- 内容 -->
         <el-tree :data="departs" :props="defaultProps" default-expand-all>
           <template #default="{data}">
-            <tree-tools :node-data="data" @del-depts="getDepartments" @add-depts="handleAddDepts" />
+            <tree-tools :node-data="data" @del-depts="getDepartments" @add-depts="handleAddDepts" @edit-depts="handleEditDepts" />
           </template>
         </el-tree>
       </el-card>
@@ -55,7 +55,12 @@ export default {
       this.nodeData = nodeData
       // 发送请求
       // console.log('发送请求')
-      this.$refs.addDept.getUserSimpleList()
+      // this.$refs.addDept.getUserSimpleList()
+    },
+    handleEditDepts(nodeData) {
+      this.dialogVisible = true
+      this.nodeData = nodeData
+      // this.$refs.addDept.getUserSimpleList()
     }
   }
 }
