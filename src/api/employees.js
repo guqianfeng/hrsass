@@ -14,3 +14,13 @@ export const reqGetUserList = (page = 1, size = 5) => request({
     size
   }
 })
+
+/**
+ * 删除员工 ()
+ */
+export function reqDelEmployee(id) {
+  return request({
+    method: 'delete',
+    url: `/sys/user/${id}`
+  })
+}

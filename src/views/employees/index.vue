@@ -27,13 +27,13 @@
             </template>
           </el-table-column>
           <el-table-column label="操作" sortable="" fixed="right" width="280">
-            <template>
+            <template #default="{row}">
               <el-button type="text" size="small">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
               <el-button type="text" size="small">角色</el-button>
-              <el-button type="text" size="small">删除</el-button>
+              <el-button type="text" size="small" @click="delEmployment(row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -54,8 +54,9 @@
   </div>
 </template>
 <script>
-import { reqGetUserList } from '@/api/employees'
+import { reqDelEmployee, reqGetUserList } from '@/api/employees'
 import employeesConstant from '@/constant/employees'
+import { logger } from 'runjs/lib/common'
 export default {
   name: 'Employees',
   data() {
@@ -71,6 +72,18 @@ export default {
     this.getUserList()
   },
   methods: {
+    delEmployment(id) {
+      this.$confirm('确认删除该角色吗', '温馨提示').then(async() => {
+        await reqDelEmployee(id)
+        this.$message.success('删除成功')
+        if (this.list.length === 1 && this.page > 1) {
+          this.page--
+        }
+        this.getUserList()
+      }).catch(error => {
+        console.log(error)
+      })
+    },
     async getUserList() {
       this.isLoading = true
       const { data: { total, rows }} = await reqGetUserList(this.page, this.size)
