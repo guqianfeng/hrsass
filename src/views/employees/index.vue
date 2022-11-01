@@ -14,14 +14,14 @@
       </page-tools>
 
       <el-card style="margin-top: 10px;">
-        <el-table border>
-          <el-table-column label="序号" sortable="" />
-          <el-table-column label="姓名" sortable="" />
-          <el-table-column label="手机号" sortable="" />
-          <el-table-column label="工号" sortable="" />
-          <el-table-column label="聘用形式" sortable="" />
-          <el-table-column label="部门" sortable="" />
-          <el-table-column label="入职时间" sortable="" />
+        <el-table border :data="list">
+          <el-table-column width="80" label="序号" type="index" sortable="" />
+          <el-table-column label="姓名" prop="username" sortable="" />
+          <el-table-column label="手机号" prop="mobile" sortable="" />
+          <el-table-column label="工号" prop="workNumber" sortable="" />
+          <el-table-column label="聘用形式" prop="formOfEmployment" sortable="" />
+          <el-table-column label="部门" prop="departmentName" sortable="" />
+          <el-table-column label="入职时间" prop="timeOfEntry" sortable="" />
           <el-table-column label="操作" sortable="" fixed="right" width="280">
             <template>
               <el-button type="text" size="small">查看</el-button>
@@ -42,8 +42,27 @@
   </div>
 </template>
 <script>
+import { reqGetUserList } from '@/api/employees'
 export default {
-  name: 'Employees'
+  name: 'Employees',
+  data() {
+    return {
+      page: 1,
+      size: 5,
+      list: [],
+      total: 0
+    }
+  },
+  created() {
+    this.getUserList()
+  },
+  methods: {
+    async getUserList() {
+      const { data: { total, rows }} = await reqGetUserList(this.page, this.size)
+      this.list = rows
+      this.total = total
+    }
+  }
 }
 </script>
 
