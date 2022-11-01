@@ -21,7 +21,11 @@
           <el-table-column label="工号" prop="workNumber" sortable="" />
           <el-table-column label="聘用形式" prop="formOfEmployment" sortable="" :formatter="formatEmployment" />
           <el-table-column label="部门" prop="departmentName" sortable="" />
-          <el-table-column label="入职时间" prop="timeOfEntry" sortable="" />
+          <el-table-column label="入职时间" prop="timeOfEntry" sortable="">
+            <template #default="{row}">
+              {{ row.timeOfEntry | formatTime('YYYY~MM~DD') }}
+            </template>
+          </el-table-column>
           <el-table-column label="操作" sortable="" fixed="right" width="280">
             <template>
               <el-button type="text" size="small">查看</el-button>
