@@ -19,7 +19,9 @@
       </el-form-item>
       <el-form-item label="部门" prop="departmentName">
         <el-input v-model="formData.departmentName" style="width:50%" placeholder="请选择部门" @click.native.stop="handleClick" />
-        <el-tree v-show="showTree" v-loading="isTreeLoading" :props="{label: 'name'}" :data="treeData" @node-click="handleNodeClick" />
+        <div v-show="showTree" class="tree-box">
+          <el-tree v-loading="isTreeLoading" :props="{label: 'name'}" :data="treeData" @node-click="handleNodeClick" />
+        </div>
       </el-form-item>
       <el-form-item label="转正时间" prop="correctionTime">
         <el-date-picker v-model="formData.correctionTime" style="width:50%" placeholder="请选择转正时间" />
@@ -103,6 +105,24 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.tree-box {
+  position: absolute;
+  width: 50%;
+  min-height: 50px;
+  max-height: 150px;
+  left: 0;
+  top: 45px;
+  z-index: 100;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-right: 5px;
+  overflow: auto;
+  background-color: #fff;
+  ::v-deep {
+    .el-tree-node__content {
+      height: auto
+    }
+  }
+}
 </style>
