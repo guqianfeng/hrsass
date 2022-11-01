@@ -3,15 +3,14 @@
     <div class="page-tools">
       <!-- 左侧 -->
       <div class="left">
-        <div class="tips">
+        <div v-if="$slots.left" class="tips">
           <i class="el-icon-info" />
-          <span>本月: 社保在缴 公积金在缴</span>
+          <slot name="left" />
         </div>
       </div>
       <div class="right">
         <!-- 右侧 -->
-        <el-button type="primary" size="small">历史归档</el-button>
-        <el-button type="primary" size="small">导出</el-button>
+        <slot name="right" />
       </div>
     </div>
   </el-card>
