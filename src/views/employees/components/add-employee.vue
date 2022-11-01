@@ -19,7 +19,7 @@
       </el-form-item>
       <el-form-item label="部门" prop="departmentName">
         <el-input v-model="formData.departmentName" style="width:50%" placeholder="请选择部门" @click.native.stop="handleClick" />
-        <el-tree v-show="showTree" v-loading="isTreeLoading" :props="{label: 'name'}" :data="treeData" />
+        <el-tree v-show="showTree" v-loading="isTreeLoading" :props="{label: 'name'}" :data="treeData" @node-click="handleNodeClick" />
       </el-form-item>
       <el-form-item label="转正时间" prop="correctionTime">
         <el-date-picker v-model="formData.correctionTime" style="width:50%" placeholder="请选择转正时间" />
@@ -82,6 +82,11 @@ export default {
     }
   },
   methods: {
+    handleNodeClick(data) {
+      if (data.children && data.children.length) return
+      this.formData.departmentName = data.name
+      this.showTree = false
+    },
     closeDialog() {
       this.$emit('update:showDialog', false)
     },
