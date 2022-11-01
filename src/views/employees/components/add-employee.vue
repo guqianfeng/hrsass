@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="新增员工" :visible="showDialog" top="8vh" @close="closeDialog">
+  <el-dialog title="新增员工" :visible="showDialog" top="8vh" @click.native="showTree = false" @close="closeDialog">
     <!-- 表单 -->
     <el-form ref="addForm" :model="formData" :rules="rules" label-width="120px">
       <el-form-item label="姓名" prop="username">
@@ -18,7 +18,7 @@
         <el-input v-model="formData.workNumber" style="width:50%" placeholder="请输入工号" />
       </el-form-item>
       <el-form-item label="部门" prop="departmentName">
-        <el-input v-model="formData.departmentName" style="width:50%" placeholder="请选择部门" @focus="handleFocus" />
+        <el-input v-model="formData.departmentName" style="width:50%" placeholder="请选择部门" @click.native.stop="handleClick" />
         <el-tree v-show="showTree" v-loading="isTreeLoading" :props="{label: 'name'}" :data="treeData" />
       </el-form-item>
       <el-form-item label="转正时间" prop="correctionTime">
@@ -85,8 +85,9 @@ export default {
     closeDialog() {
       this.$emit('update:showDialog', false)
     },
-    async handleFocus() {
-      this.showTree = true
+    async handleClick() {
+      this.showTree = !this.showTree
+      if (!this.showTree) return
       this.isTreeLoading = true
       const { data: { depts }} = await reqGetDepartments()
       const treeData = transListToTreeData(depts)
