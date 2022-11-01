@@ -17,7 +17,7 @@ import '@/permission' // permission control
 import request from '@/utils/request'
 // import { imgerror, color } from "@/directives";
 import * as directives from '@/directives'
-import dayjs from 'dayjs'
+import * as filters from '@/filters'
 
 import HrSassUI from '@/components'
 Vue.use(HrSassUI)
@@ -42,8 +42,7 @@ Vue.prototype.$request = request
 // }
 
 Object.keys(directives).forEach((key) => Vue.directive(key, directives[key]))
-
-Vue.filter('formatTime', (value, str = 'YYYY-MM-DD') => dayjs(value).format(str))
+Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]))
 
 new Vue({
   el: '#app',
