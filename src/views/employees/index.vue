@@ -35,7 +35,15 @@
         </el-table>
         <!-- 分页组件 -->
         <div style="height: 60px; margin-top: 10px">
-          <el-pagination layout="prev, pager, next" />
+          <el-pagination
+            :current-page="page"
+            :page-sizes="[1, 2, 3, 4]"
+            :page-size="size"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
         </div>
       </el-card>
     </div>
@@ -61,6 +69,15 @@ export default {
       const { data: { total, rows }} = await reqGetUserList(this.page, this.size)
       this.list = rows
       this.total = total
+    },
+    handleSizeChange(val) {
+      this.size = val
+      this.page = 1
+      this.getUserList()
+    },
+    handleCurrentChange(val) {
+      this.page = val
+      this.getUserList()
     }
   }
 }
