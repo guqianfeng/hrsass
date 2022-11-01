@@ -87,7 +87,8 @@ export default {
       return index + 1 + (this.page - 1) * this.size
     },
     formatEmployment(row, column, cellValue, index) {
-      return employeesConstant.hireType.find(item => item.id === cellValue).value
+      const result = employeesConstant.hireType.find(item => item.id === cellValue)
+      return result ? result.value : '未知'
     }
   }
 }
