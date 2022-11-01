@@ -18,7 +18,7 @@
         <el-input v-model="formData.workNumber" style="width:50%" placeholder="请输入工号" />
       </el-form-item>
       <el-form-item label="部门" prop="departmentName">
-        <el-input v-model="formData.departmentName" style="width:50%" placeholder="请选择部门" @click.native.stop="handleClick" />
+        <el-input :value="formData.departmentName" style="width:50%" placeholder="请选择部门" @click.native.stop="handleClick" />
         <div v-show="showTree" class="tree-box">
           <el-tree v-loading="isTreeLoading" :props="{label: 'name'}" :data="treeData" @node-click="handleNodeClick" />
         </div>
