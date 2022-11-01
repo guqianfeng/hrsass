@@ -13,9 +13,9 @@
         </template>
       </page-tools>
 
-      <el-card style="margin-top: 10px;">
+      <el-card v-loading="isLoading" style="margin-top: 10px;">
         <el-table border :data="list">
-          <el-table-column width="80" label="序号" type="index" sortable="" />
+          <el-table-column width="80" label="序号" type="index" sortable="" :index="indexMethod" />
           <el-table-column label="姓名" prop="username" sortable="" />
           <el-table-column label="手机号" prop="mobile" sortable="" />
           <el-table-column label="工号" prop="workNumber" sortable="" />
@@ -37,7 +37,7 @@
         <div style="height: 60px; margin-top: 10px">
           <el-pagination
             :current-page="page"
-            :page-sizes="[1, 2, 3, 4]"
+            :page-sizes="[1, 2, 3, 4, 5]"
             :page-size="size"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total"
@@ -58,7 +58,8 @@ export default {
       page: 1,
       size: 5,
       list: [],
-      total: 0
+      total: 0,
+      isLoading: false
     }
   },
   created() {
@@ -66,9 +67,11 @@ export default {
   },
   methods: {
     async getUserList() {
+      this.isLoading = true
       const { data: { total, rows }} = await reqGetUserList(this.page, this.size)
       this.list = rows
       this.total = total
+      this.isLoading = false
     },
     handleSizeChange(val) {
       this.size = val
@@ -78,6 +81,9 @@ export default {
     handleCurrentChange(val) {
       this.page = val
       this.getUserList()
+    },
+    indexMethod(index) {
+      return index + 1 + (this.page - 1) * this.size
     }
   }
 }
