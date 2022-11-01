@@ -118,7 +118,7 @@ export function param2Obj(url) {
   return obj
 }
 
-export function transListToTreeData(list, value) {
+export function transListToTreeData(list, value = '') {
   const arr = []
   // console.log({ list, value })
   list.forEach(item => {
