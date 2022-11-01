@@ -18,8 +18,11 @@ import request from '@/utils/request'
 // import { imgerror, color } from "@/directives";
 import * as directives from '@/directives'
 
-import PageTools from '@/components/PageTools'
-Vue.component('PageTools', PageTools)
+import HrSassUI from '@/components'
+Vue.use(HrSassUI)
+
+// import PageTools from '@/components/PageTools'
+// Vue.component('PageTools', PageTools)
 
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
