@@ -19,7 +19,7 @@
           <el-table-column label="姓名" prop="username" sortable="" />
           <el-table-column label="手机号" prop="mobile" sortable="" />
           <el-table-column label="工号" prop="workNumber" sortable="" />
-          <el-table-column label="聘用形式" prop="formOfEmployment" sortable="" />
+          <el-table-column label="聘用形式" prop="formOfEmployment" sortable="" :formatter="formatEmployment" />
           <el-table-column label="部门" prop="departmentName" sortable="" />
           <el-table-column label="入职时间" prop="timeOfEntry" sortable="" />
           <el-table-column label="操作" sortable="" fixed="right" width="280">
@@ -51,6 +51,7 @@
 </template>
 <script>
 import { reqGetUserList } from '@/api/employees'
+import employeesConstant from '@/constant/employees'
 export default {
   name: 'Employees',
   data() {
@@ -84,6 +85,9 @@ export default {
     },
     indexMethod(index) {
       return index + 1 + (this.page - 1) * this.size
+    },
+    formatEmployment(row, column, cellValue, index) {
+      return employeesConstant.hireType.find(item => item.id === cellValue).value
     }
   }
 }
