@@ -50,7 +50,7 @@
           />
         </div>
       </el-card>
-      <add-employee :show-dialog.sync="showDialog" />
+      <add-employee :show-dialog.sync="showDialog" @add-employee="getUserList" />
     </div>
   </div>
 </template>

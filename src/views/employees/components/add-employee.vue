@@ -32,7 +32,7 @@
     <!-- footer插槽 -->
     <template v-slot:footer>
       <el-button @click="closeDialog">取消</el-button>
-      <el-button type="primary">确定</el-button>
+      <el-button type="primary" @click="clickSubmit">确定</el-button>
     </template>
   </el-dialog>
 </template>
@@ -41,6 +41,7 @@
 import { reqGetDepartments } from '@/api/departments'
 import { transListToTreeData } from '@/utils'
 import employeesConstant from '@/constant/employees'
+import { reqAddEmployee } from '@/api/employees'
 const { hireType } = employeesConstant
 export default {
   props: {
@@ -96,6 +97,7 @@ export default {
     },
     closeDialog() {
       this.$emit('update:showDialog', false)
+      this.$refs.addForm.resetFields()
     },
     async handleClick() {
       this.showTree = !this.showTree
@@ -105,6 +107,15 @@ export default {
       const treeData = transListToTreeData(depts)
       this.treeData = treeData
       this.isTreeLoading = false
+    },
+    clickSubmit() {
+      this.$refs.addForm.validate(async flag => {
+        if (!flag) return
+        await reqAddEmployee(this.formData)
+        this.$message.success('新增员工成功')
+        this.closeDialog()
+        this.$emit('add-employee')
+      })
     }
   }
 }

@@ -24,3 +24,16 @@ export function reqDelEmployee(id) {
     url: `/sys/user/${id}`
   })
 }
+
+/**
+ * 新增员工
+ * @param {*} form
+ * @returns
+ */
+export function reqAddEmployee(form) {
+  return request({
+    url: '/sys/user',
+    method: 'POST',
+    data: form
+  })
+}
