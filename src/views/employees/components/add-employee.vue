@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="新增员工" :visible="showDialog" top="8vh">
+  <el-dialog title="新增员工" :visible="showDialog" top="8vh" @close="closeDialog">
     <!-- 表单 -->
     <el-form label-width="120px">
       <el-form-item label="姓名">
@@ -26,7 +26,7 @@
     </el-form>
     <!-- footer插槽 -->
     <template v-slot:footer>
-      <el-button>取消</el-button>
+      <el-button @click="closeDialog">取消</el-button>
       <el-button type="primary">确定</el-button>
     </template>
   </el-dialog>
@@ -38,6 +38,11 @@ export default {
     showDialog: {
       type: Boolean,
       default: false
+    }
+  },
+  methods: {
+    closeDialog() {
+      this.$emit('update:showDialog', false)
     }
   }
 }
