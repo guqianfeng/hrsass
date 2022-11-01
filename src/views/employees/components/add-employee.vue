@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="新增员工" :visible="showDialog">
+  <el-dialog title="新增员工" :visible="showDialog" top="8vh">
     <!-- 表单 -->
     <el-form label-width="120px">
       <el-form-item label="姓名">

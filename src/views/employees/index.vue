@@ -9,7 +9,7 @@
         <template #right>
           <el-button type="warning" size="small">excel导入</el-button>
           <el-button type="danger" size="small">excel导出</el-button>
-          <el-button type="primary" size="small">新增员工</el-button>
+          <el-button type="primary" size="small" @click="showDialog = true">新增员工</el-button>
         </template>
       </page-tools>
 
@@ -50,22 +50,25 @@
           />
         </div>
       </el-card>
+      <add-employee :show-dialog="showDialog" />
     </div>
   </div>
 </template>
 <script>
 import { reqDelEmployee, reqGetUserList } from '@/api/employees'
 import employeesConstant from '@/constant/employees'
-import { logger } from 'runjs/lib/common'
+import addEmployee from './components/add-employee.vue'
 export default {
   name: 'Employees',
+  components: { addEmployee },
   data() {
     return {
       page: 1,
       size: 5,
       list: [],
       total: 0,
-      isLoading: false
+      isLoading: false,
+      showDialog: false
     }
   },
   created() {
