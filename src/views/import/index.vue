@@ -22,6 +22,9 @@ export default {
         const obj = {}
         // console.log(res)
         for (const key in res) {
+          if (key === '入职日期') {
+            console.log(this.formatExcelDate(res[key], '-'))
+          }
           obj[userRelations[key]] = res[key]
         }
         // console.log(obj)
@@ -30,6 +33,17 @@ export default {
       // console.log(arr)
       const res = await reqUserBatch(arr)
       console.log(res)
+    },
+    formatExcelDate(numb, format) {
+      const time = new Date((numb) * 24 * 3600000 + 1) // 毫秒
+      time.setYear(time.getFullYear() - 70)
+      const year = time.getFullYear() + ''
+      const month = time.getMonth() + 1 + ''
+      const date = time.getDate() - 1 + ''
+      if (format && format.length === 1) {
+        return year + format + (month < 10 ? '0' + month : month) + format + (date < 10 ? '0' + date : date)
+      }
+      return year + (month < 10 ? '0' + month : month) + (date < 10 ? '0' + date : date)
     }
   }
 }
