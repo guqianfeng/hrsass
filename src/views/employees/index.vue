@@ -124,6 +124,8 @@ export default {
         部门: "departmentName",
       };
       const resultArr = this.formatFn(rows, headersArr, headersRelations);
+      const multiHeader = [["姓名", "主要信息", "", "", "", "", "部门"]];
+      const merges = ["A1:A2", "B1:F1", "G1:G2"];
       // console.log({ resultArr })
       import("@/vendor/Export2Excel").then((excel) => {
         // console.log(excel)
@@ -133,6 +135,8 @@ export default {
           filename: "员工信息表",
           autoWidth: true, // 非必填
           bookType: "xlsx", // 非必填
+          multiHeader,
+          merges,
         });
       });
     },
