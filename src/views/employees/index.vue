@@ -75,9 +75,11 @@ export default {
     this.getUserList()
   },
   methods: {
-    handelExport() {
+    async handelExport() {
+      const { data: { rows }} = await reqGetUserList(1, this.total)
+      console.log(rows)
       import('@/vendor/Export2Excel').then(excel => {
-        console.log(excel)
+        // console.log(excel)
         excel.export_json_to_excel({
           header: ['序号', '姓名', '年龄'],
           data: [
