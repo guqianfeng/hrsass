@@ -8,7 +8,7 @@
 
         <template #right>
           <el-button type="warning" size="small" @click="$router.push('/import?type=user')">excel导入</el-button>
-          <el-button type="danger" size="small">excel导出</el-button>
+          <el-button type="danger" size="small" @click="handelExport">excel导出</el-button>
           <el-button type="primary" size="small" @click="showDialog = true">新增员工</el-button>
         </template>
       </page-tools>
@@ -75,6 +75,21 @@ export default {
     this.getUserList()
   },
   methods: {
+    handelExport() {
+      import('@/vendor/Export2Excel').then(excel => {
+        console.log(excel)
+        excel.export_json_to_excel({
+          header: ['序号', '姓名', '年龄'],
+          data: [
+            ['1', '张三', 1],
+            ['2', '李四', 2]
+          ],
+          filename: '测试文件',
+          autoWidth: true, // 非必填
+          bookType: 'xlsx' // 非必填
+        })
+      })
+    },
     delEmployment(id) {
       this.$confirm('确认删除该角色吗', '温馨提示').then(async() => {
         await reqDelEmployee(id)
