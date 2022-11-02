@@ -7,33 +7,55 @@
         </template>
 
         <template #right>
-          <el-button type="warning" size="small" @click="$router.push('/import?type=user')">excel导入</el-button>
-          <el-button type="danger" size="small" @click="handelExport">excel导出</el-button>
-          <el-button type="primary" size="small" @click="showDialog = true">新增员工</el-button>
+          <el-button
+            type="warning"
+            size="small"
+            @click="$router.push('/import?type=user')"
+            >excel导入</el-button
+          >
+          <el-button type="danger" size="small" @click="handelExport"
+            >excel导出</el-button
+          >
+          <el-button type="primary" size="small" @click="showDialog = true"
+            >新增员工</el-button
+          >
         </template>
       </page-tools>
 
-      <el-card v-loading="isLoading" style="margin-top: 10px;">
+      <el-card v-loading="isLoading" style="margin-top: 10px">
         <el-table border :data="list">
-          <el-table-column width="80" label="序号" type="index" sortable="" :index="indexMethod" />
+          <el-table-column
+            width="80"
+            label="序号"
+            type="index"
+            sortable=""
+            :index="indexMethod"
+          />
           <el-table-column label="姓名" prop="username" sortable="" />
           <el-table-column label="手机号" prop="mobile" sortable="" />
           <el-table-column label="工号" prop="workNumber" sortable="" />
-          <el-table-column label="聘用形式" prop="formOfEmployment" sortable="" :formatter="formatEmployment" />
+          <el-table-column
+            label="聘用形式"
+            prop="formOfEmployment"
+            sortable=""
+            :formatter="formatEmployment"
+          />
           <el-table-column label="部门" prop="departmentName" sortable="" />
           <el-table-column label="入职时间" prop="timeOfEntry" sortable="">
-            <template #default="{row}">
-              {{ row.timeOfEntry | formatTime('YYYY-MM-DD') }}
+            <template #default="{ row }">
+              {{ row.timeOfEntry | formatTime("YYYY-MM-DD") }}
             </template>
           </el-table-column>
           <el-table-column label="操作" sortable="" fixed="right" width="280">
-            <template #default="{row}">
+            <template #default="{ row }">
               <el-button type="text" size="small">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
               <el-button type="text" size="small">角色</el-button>
-              <el-button type="text" size="small" @click="delEmployment(row.id)">删除</el-button>
+              <el-button type="text" size="small" @click="delEmployment(row.id)"
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -50,16 +72,20 @@
           />
         </div>
       </el-card>
-      <add-employee :show-dialog.sync="showDialog" @add-employee="getUserList" />
+      <add-employee
+        :show-dialog.sync="showDialog"
+        @add-employee="getUserList"
+      />
     </div>
   </div>
 </template>
 <script>
-import { reqDelEmployee, reqGetUserList } from '@/api/employees'
-import employeesConstant from '@/constant/employees'
-import addEmployee from './components/add-employee.vue'
+import { reqDelEmployee, reqGetUserList } from "@/api/employees";
+import employeesConstant from "@/constant/employees";
+import dayjs from "dayjs";
+import addEmployee from "./components/add-employee.vue";
 export default {
-  name: 'Employees',
+  name: "Employees",
   components: { addEmployee },
   data() {
     return {
@@ -68,87 +94,113 @@ export default {
       list: [],
       total: 0,
       isLoading: false,
-      showDialog: false
-    }
+      showDialog: false,
+    };
   },
   created() {
-    this.getUserList()
+    this.getUserList();
   },
   methods: {
     async handelExport() {
-      const { data: { rows }} = await reqGetUserList(1, this.total)
-      const headersArr = ['姓名', '手机号', '入职日期', '聘用形式', '转正日期', '工号', '部门']
+      const {
+        data: { rows },
+      } = await reqGetUserList(1, this.total);
+      const headersArr = [
+        "姓名",
+        "手机号",
+        "入职日期",
+        "聘用形式",
+        "转正日期",
+        "工号",
+        "部门",
+      ];
       const headersRelations = {
-        '姓名': 'username',
-        '手机号': 'mobile',
-        '入职日期': 'timeOfEntry',
-        '聘用形式': 'formOfEmployment',
-        '转正日期': 'correctionTime',
-        '工号': 'workNumber',
-        '部门': 'departmentName'
-      }
-      const resultArr = this.formatFn(rows, headersArr, headersRelations)
+        姓名: "username",
+        手机号: "mobile",
+        入职日期: "timeOfEntry",
+        聘用形式: "formOfEmployment",
+        转正日期: "correctionTime",
+        工号: "workNumber",
+        部门: "departmentName",
+      };
+      const resultArr = this.formatFn(rows, headersArr, headersRelations);
       // console.log({ resultArr })
-      import('@/vendor/Export2Excel').then(excel => {
+      import("@/vendor/Export2Excel").then((excel) => {
         // console.log(excel)
         excel.export_json_to_excel({
           header: headersArr,
           data: resultArr,
-          filename: '员工信息表',
+          filename: "员工信息表",
           autoWidth: true, // 非必填
-          bookType: 'xlsx' // 非必填
-        })
-      })
+          bookType: "xlsx", // 非必填
+        });
+      });
     },
     formatFn(rows, headersArr, headersRelations) {
-      const result = []
-      rows.forEach(row => {
-        const itemArr = []
-        headersArr.forEach(key => {
-          const enKey = headersRelations[key]
-          itemArr.push(row[enKey])
-        })
-        result.push(itemArr)
-      })
-      return result
+      const result = [];
+      rows.forEach((row) => {
+        const itemArr = [];
+        headersArr.forEach((key) => {
+          const enKey = headersRelations[key];
+          let val = row[enKey];
+          if (["timeOfEntry", "correctionTime"].includes(enKey)) {
+            val = dayjs(val).format("YYYY年MM月DD日");
+          }
+          if ("formOfEmployment" === enKey) {
+            const result = employeesConstant.hireType.find(
+              (item) => item.id === val
+            );
+            val = result ? result.value : "未知";
+          }
+          itemArr.push(val);
+        });
+        result.push(itemArr);
+      });
+      return result;
     },
     delEmployment(id) {
-      this.$confirm('确认删除该角色吗', '温馨提示').then(async() => {
-        await reqDelEmployee(id)
-        this.$message.success('删除成功')
-        if (this.list.length === 1 && this.page > 1) {
-          this.page--
-        }
-        this.getUserList()
-      }).catch(error => {
-        console.log(error)
-      })
+      this.$confirm("确认删除该角色吗", "温馨提示")
+        .then(async () => {
+          await reqDelEmployee(id);
+          this.$message.success("删除成功");
+          if (this.list.length === 1 && this.page > 1) {
+            this.page--;
+          }
+          this.getUserList();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     async getUserList() {
-      this.isLoading = true
-      const { data: { total, rows }} = await reqGetUserList(this.page, this.size)
-      this.list = rows
-      this.total = total
-      this.isLoading = false
+      this.isLoading = true;
+      const {
+        data: { total, rows },
+      } = await reqGetUserList(this.page, this.size);
+      this.list = rows;
+      this.total = total;
+      this.isLoading = false;
     },
     handleSizeChange(val) {
-      this.size = val
-      this.page = 1
-      this.getUserList()
+      this.size = val;
+      this.page = 1;
+      this.getUserList();
     },
     handleCurrentChange(val) {
-      this.page = val
-      this.getUserList()
+      this.page = val;
+      this.getUserList();
     },
     indexMethod(index) {
-      return index + 1 + (this.page - 1) * this.size
+      return index + 1 + (this.page - 1) * this.size;
     },
     formatEmployment(row, column, cellValue, index) {
-      const result = employeesConstant.hireType.find(item => item.id === +cellValue)
-      return result ? result.value : '未知'
-    }
-  }
-}
+      const result = employeesConstant.hireType.find(
+        (item) => item.id === +cellValue
+      );
+      return result ? result.value : "未知";
+    },
+  },
+};
 </script>
 
 <style></style>
