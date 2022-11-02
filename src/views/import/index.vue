@@ -22,17 +22,20 @@ export default {
         const obj = {}
         // console.log(res)
         for (const key in res) {
-          if (key === '入职日期') {
-            console.log(this.formatExcelDate(res[key], '-'))
+          const enKey = userRelations[key]
+          if (['timeOfEntry', 'correctionTime'].includes(enKey)) {
+            obj[enKey] = this.formatExcelDate(res[key], '-')
+          } else {
+            obj[enKey] = res[key]
           }
-          obj[userRelations[key]] = res[key]
         }
         // console.log(obj)
         arr.push(obj)
       })
-      // console.log(arr)
-      const res = await reqUserBatch(arr)
-      console.log(res)
+      console.log(arr)
+      await reqUserBatch(arr)
+      this.$message.success('恭喜批量导入成功')
+      this.$router.push('/employees')
     },
     formatExcelDate(numb, format) {
       const time = new Date((numb) * 24 * 3600000 + 1) // 毫秒

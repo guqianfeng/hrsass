@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
-    <upload-excel :on-success="handleSuccess" :before-upload="beforeUpload" />
   </div>
 </template>
 
@@ -14,26 +13,6 @@ export default {
     ...mapGetters([
       'name'
     ])
-  },
-  methods: {
-    beforeUpload(file) {
-      console.log('before upload', file)
-      const isLt1M = file.size / 1024 / 1024 < 1
-
-      if (isLt1M) {
-        return true
-      }
-
-      this.$message({
-        message: 'Please do not upload files larger than 1m in size.',
-        type: 'warning'
-      })
-      return false
-    },
-    handleSuccess({ results, header }) {
-      console.log('handle success')
-      console.log(results, header)
-    }
   }
 }
 </script>

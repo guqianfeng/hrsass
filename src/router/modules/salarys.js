@@ -4,7 +4,7 @@ export default {
   component: Layout,
   children: [
     {
-      path: 'salarys',
+      path: '',
       name: 'salarys',
       component: () => import('@/views/salarys/index'),
       meta: { title: '工资', icon: 'money' }

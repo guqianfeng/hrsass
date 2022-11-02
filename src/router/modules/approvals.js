@@ -4,7 +4,7 @@ export default {
   component: Layout,
   children: [
     {
-      path: 'approvals',
+      path: '',
       name: 'approvals',
       component: () => import('@/views/approvals/index'),
       meta: { title: '审批', icon: 'tree-table' }

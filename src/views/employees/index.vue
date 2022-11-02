@@ -23,7 +23,7 @@
           <el-table-column label="部门" prop="departmentName" sortable="" />
           <el-table-column label="入职时间" prop="timeOfEntry" sortable="">
             <template #default="{row}">
-              {{ row.timeOfEntry | formatTime('YYYY~MM~DD') }}
+              {{ row.timeOfEntry | formatTime('YYYY-MM-DD') }}
             </template>
           </el-table-column>
           <el-table-column label="操作" sortable="" fixed="right" width="280">

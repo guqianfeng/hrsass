@@ -4,7 +4,7 @@ export default {
   component: Layout,
   children: [
     {
-      path: 'attendances',
+      path: '',
       name: 'attendances',
       component: () => import('@/views/attendances/index'),
       meta: { title: '考勤', icon: 'skill' }
