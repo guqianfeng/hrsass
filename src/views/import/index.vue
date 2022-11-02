@@ -5,9 +5,10 @@
 </template>
 
 <script>
+import { reqUserBatch } from '@/api/employees'
 export default {
   methods: {
-    handleSuccess({ header, results }) {
+    async handleSuccess({ header, results }) {
       // console.log(header, results)
       const userRelations = {
         '入职日期': 'timeOfEntry',
@@ -26,7 +27,9 @@ export default {
         // console.log(obj)
         arr.push(obj)
       })
-      console.log(arr)
+      // console.log(arr)
+      const res = await reqUserBatch(arr)
+      console.log(res)
     }
   }
 }
