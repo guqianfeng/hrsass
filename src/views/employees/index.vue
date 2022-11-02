@@ -77,20 +77,40 @@ export default {
   methods: {
     async handelExport() {
       const { data: { rows }} = await reqGetUserList(1, this.total)
-      console.log(rows)
+      const headersArr = ['姓名', '手机号', '入职日期', '聘用形式', '转正日期', '工号', '部门']
+      const headersRelations = {
+        '姓名': 'username',
+        '手机号': 'mobile',
+        '入职日期': 'timeOfEntry',
+        '聘用形式': 'formOfEmployment',
+        '转正日期': 'correctionTime',
+        '工号': 'workNumber',
+        '部门': 'departmentName'
+      }
+      const resultArr = this.formatFn(rows, headersArr, headersRelations)
+      // console.log({ resultArr })
       import('@/vendor/Export2Excel').then(excel => {
         // console.log(excel)
         excel.export_json_to_excel({
-          header: ['序号', '姓名', '年龄'],
-          data: [
-            ['1', '张三', 1],
-            ['2', '李四', 2]
-          ],
-          filename: '测试文件',
+          header: headersArr,
+          data: resultArr,
+          filename: '员工信息表',
           autoWidth: true, // 非必填
           bookType: 'xlsx' // 非必填
         })
       })
+    },
+    formatFn(rows, headersArr, headersRelations) {
+      const result = []
+      rows.forEach(row => {
+        const itemArr = []
+        headersArr.forEach(key => {
+          const enKey = headersRelations[key]
+          itemArr.push(row[enKey])
+        })
+        result.push(itemArr)
+      })
+      return result
     },
     delEmployment(id) {
       this.$confirm('确认删除该角色吗', '温馨提示').then(async() => {
