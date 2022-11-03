@@ -13,15 +13,17 @@
                 <el-input v-model="userInfo.newPassword" placeholder="请输入新密码" style="width:300px" type="password" />
               </el-form-item>
               <el-form-item>
-                <el-button type="primary">更新</el-button>
+                <el-button type="primary" @click="saveUser">更新</el-button>
               </el-form-item>
             </el-form>
           </el-tab-pane>
           <el-tab-pane label="个人详情">
             <!-- 内容 -->
+            <user-info />
           </el-tab-pane>
           <el-tab-pane label="岗位信息">
             <!-- 内容 -->
+            <job-info />
           </el-tab-pane>
         </el-tabs>
       </el-card>
@@ -31,8 +33,12 @@
 
 <script>
 import { reqGetBaseInfo } from '@/api/user'
+import { reqSaveUserDetailById } from '@/api/employees'
+import userInfo from './components/user-info.vue'
+import JobInfo from './components/job-info.vue'
 export default {
   name: 'EmployeesDetail',
+  components: { userInfo, JobInfo },
   data() {
     return {
       userInfo: {
@@ -57,6 +63,19 @@ export default {
   async created() {
     const { data } = await reqGetBaseInfo(this.userId)
     this.userInfo = data
+  },
+  methods: {
+    saveUser() {
+      this.$refs.userForm.validate(async(flag) => {
+        if (!flag) return
+        // 校验通过
+        await reqSaveUserDetailById({
+          ...this.userInfo,
+          password: this.userInfo.newPassword
+        })
+        this.$message.success('保存成功')
+      })
+    }
   }
 }
 </script>

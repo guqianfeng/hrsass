@@ -50,3 +50,14 @@ export function reqUserBatch(arr) {
     data: arr
   })
 }
+
+/** *
+ * 保存员工的基本信息
+ * **/
+export function reqSaveUserDetailById(data) {
+  return request({
+    method: 'put',
+    url: `/sys/user/${data.id}`,
+    data
+  })
+}
