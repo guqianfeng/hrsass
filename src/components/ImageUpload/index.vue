@@ -51,6 +51,9 @@ export default {
   computed: {
     disabled() {
       return this.fileList.length >= this.limit
+    },
+    isAllUploaded() {
+      return this.fileList.every(item => item.status === 'success')
     }
   },
   methods: {

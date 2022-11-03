@@ -381,7 +381,16 @@ export default {
     },
     async saveUser() {
     //  调用父组件
-      const staffPhoto = this.$refs.staffPhotoRef.fileList[0].url
+      const staffPhoto = this.$refs.staffPhotoRef.fileList[0]?.url
+      if (!staffPhoto) {
+        this.$message.warning('请上传图片')
+        return
+      }
+      const isAllUploaded = this.$refs.staffPhotoRef.isAllUploaded
+      if (!isAllUploaded) {
+        this.$message.warning('图片上传中，请稍后！')
+        return
+      }
       await reqSaveUserDetailById({
         ...this.userInfo,
         staffPhoto

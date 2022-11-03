@@ -15,7 +15,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img v-imgerror="defaultImg" src="staffPhoto" class="user-avatar">
+          <img v-imgerror="defaultImg" :src="staffPhoto" class="user-avatar">
           <span class="name">{{ name }}</span>
           <!-- <span class="name">{{ $store.getters.name }}</span> -->
           <!-- <span class="name">{{ $store.state.user.userInfo.username }}</span> -->
