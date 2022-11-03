@@ -57,7 +57,7 @@
         <el-col :span="12">
           <el-form-item label="员工头像">
             <!-- 放置上传图片 -->
-            <image-upload :limit="2" />
+            <image-upload ref="staffPhotoRef" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -89,6 +89,7 @@
 
         <el-form-item label="员工照片">
           <!-- 放置上传图片 -->
+          <image-upload :limit="3" />
         </el-form-item>
         <el-form-item label="国家/地区">
           <el-select v-model="formData.nationalArea" class="inputW2">
@@ -373,10 +374,18 @@ export default {
     async getUserDetailById() {
       const { data } = await reqGetUserDetailById(this.userId)
       this.userInfo = data
+      // console.log(data)
+      this.$refs.staffPhotoRef.fileList = [{
+        url: data.staffPhoto
+      }]
     },
     async saveUser() {
     //  调用父组件
-      await reqSaveUserDetailById(this.userInfo)
+      const staffPhoto = this.$refs.staffPhotoRef.fileList[0].url
+      await reqSaveUserDetailById({
+        ...this.userInfo,
+        staffPhoto
+      })
       this.$message.success('保存成功')
     },
 
