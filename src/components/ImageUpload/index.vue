@@ -1,13 +1,13 @@
 <template>
   <div class="image-upload">
     <el-upload
-      :class="{disabled: true}"
+      :class="{disabled}"
       action="#"
       list-type="picture-card"
       :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove"
       :file-list="fileList"
-      :limit="2"
+      :limit="limit"
     >
       <i class="el-icon-plus" />
     </el-upload>
@@ -20,11 +20,22 @@
 <script>
 export default {
   name: 'ImageUpload',
+  props: {
+    limit: {
+      type: Number,
+      default: 1
+    }
+  },
   data() {
     return {
       dialogImageUrl: '',
       dialogVisible: false,
       fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }]
+    }
+  },
+  computed: {
+    disabled() {
+      return this.fileList.length >= this.limit
     }
   },
   methods: {
