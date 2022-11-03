@@ -8,6 +8,7 @@
       :on-remove="handleRemove"
       :file-list="fileList"
       :limit="limit"
+      :http-request="handleRequest"
     >
       <i class="el-icon-plus" />
     </el-upload>
@@ -39,6 +40,9 @@ export default {
     }
   },
   methods: {
+    handleRequest() {
+      console.log('request')
+    },
     handleRemove(file, fileList) {
       // console.log(file, fileList)
       this.fileList = [...fileList]

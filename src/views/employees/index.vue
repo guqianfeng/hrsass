@@ -15,7 +15,7 @@
           <el-button
             type="danger"
             size="small"
-            @click="handelExport"
+            @click="handleExport"
           >excel导出</el-button>
           <el-button
             type="primary"
@@ -106,7 +106,7 @@ export default {
     this.getUserList()
   },
   methods: {
-    async handelExport() {
+    async handleExport() {
       const {
         data: { rows }
       } = await reqGetUserList(1, this.total)
