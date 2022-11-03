@@ -153,6 +153,8 @@
 </template>
 <script>
 import EmployeeEnum from '@/constant/employees'
+import { reqGetJobDetail, reqUpdateJob } from '@/api/employees'
+import { reqGetUserSimpleList as reqGetEmployeeSimple } from '@/api/user'
 
 export default {
   data() {
@@ -194,9 +196,27 @@ export default {
       return this.$route.params.id
     }
   },
+  created() {
+    this.getJobDetail()
+    this.getEmployeeSimple()
+  },
   methods: {
-    saveJob() {
-
+  // 获取基本岗位详情数据
+    async getJobDetail() {
+      const { data } = await reqGetJobDetail(this.userId)
+      this.formData = data
+    },
+    // 获取员工列表, 用于将来用户选择上级 (以及, 上级员工名称的显示)
+    async getEmployeeSimple() {
+      const { data } = await reqGetEmployeeSimple()
+      this.list = data
+    },
+    async saveJob() {
+      await reqUpdateJob({
+        ...this.formData,
+        userId: this.userId
+      })
+      this.$message.success('保存成功')
     }
   }
 }
