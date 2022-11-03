@@ -281,6 +281,7 @@
 </template>
 <script>
 import EmployeeEnum from '@/constant/employees'
+import { reqGetPersonalDetail, reqUpdatePersonal, reqGetUserDetailById, reqSaveUserDetailById } from '@/api/employees'
 
 export default {
   data() {
@@ -364,12 +365,28 @@ export default {
       return this.$route.params.id
     }
   },
+  created() {
+    this.getUserDetailById()
+    this.getPersonalDetail()
+  },
   methods: {
-    saveUser() {
-
+    async getUserDetailById() {
+      const { data } = await reqGetUserDetailById(this.userId)
+      this.userInfo = data
     },
-    savePersonal() {
+    async saveUser() {
+    //  调用父组件
+      await reqSaveUserDetailById(this.userInfo)
+      this.$message.success('保存成功')
+    },
 
+    async getPersonalDetail() {
+      const { data } = await reqGetPersonalDetail(this.userId) // 获取员工数据
+      this.formData = data
+    },
+    async savePersonal() {
+      await reqUpdatePersonal({ ...this.formData, userId: this.userId })
+      this.$message.success('保存成功')
     }
   }
 }
