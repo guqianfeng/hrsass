@@ -1,11 +1,13 @@
 <template>
   <div class="image-upload">
     <el-upload
+      :class="{disabled: true}"
       action="#"
       list-type="picture-card"
       :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove"
       :file-list="fileList"
+      :limit="2"
     >
       <i class="el-icon-plus" />
     </el-upload>
@@ -37,6 +39,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.disabled {
+  ::v-deep {
+    .el-upload--picture-card {
+      display: none
+    }
+  }
+}
 </style>
