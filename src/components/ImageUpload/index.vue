@@ -10,6 +10,7 @@
       :limit="limit"
       :http-request="handleRequest"
       :on-change="handleChange"
+      :before-upload="beforeAvatarUpload"
     >
       <i class="el-icon-plus" />
     </el-upload>
@@ -42,6 +43,15 @@ export default {
     }
   },
   methods: {
+    beforeAvatarUpload(file) {
+      const isLt1M = file.size / 1024 / 1024 < 1
+
+      if (!isLt1M) {
+        this.$message.error('上传头像图片大小不能超过 1MB!')
+        return false
+      }
+      return true
+    },
     handleChange(file, fileList) {
       this.fileList = [...fileList]
     },
