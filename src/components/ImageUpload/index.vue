@@ -9,6 +9,7 @@
       :file-list="fileList"
       :limit="limit"
       :http-request="handleRequest"
+      :on-change="handleChange"
     >
       <i class="el-icon-plus" />
     </el-upload>
@@ -31,7 +32,8 @@ export default {
     return {
       dialogImageUrl: '',
       dialogVisible: false,
-      fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }]
+      // fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }]
+      fileList: []
     }
   },
   computed: {
@@ -40,8 +42,11 @@ export default {
     }
   },
   methods: {
-    handleRequest() {
-      console.log('request')
+    handleChange(file, fileList) {
+      this.fileList = [...fileList]
+    },
+    handleRequest(e) {
+      console.log('request', e.file)
     },
     handleRemove(file, fileList) {
       // console.log(file, fileList)
