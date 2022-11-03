@@ -3,7 +3,7 @@
     <div class="app-container">
       <page-tools>
         <template #left>
-          <span>总记录数: 16 条</span>
+          <span>总记录数: {{ total }} 条</span>
         </template>
 
         <template #right>
@@ -11,14 +11,17 @@
             type="warning"
             size="small"
             @click="$router.push('/import?type=user')"
-            >excel导入</el-button
-          >
-          <el-button type="danger" size="small" @click="handelExport"
-            >excel导出</el-button
-          >
-          <el-button type="primary" size="small" @click="showDialog = true"
-            >新增员工</el-button
-          >
+          >excel导入</el-button>
+          <el-button
+            type="danger"
+            size="small"
+            @click="handelExport"
+          >excel导出</el-button>
+          <el-button
+            type="primary"
+            size="small"
+            @click="showDialog = true"
+          >新增员工</el-button>
         </template>
       </page-tools>
 
@@ -48,14 +51,16 @@
           </el-table-column>
           <el-table-column label="操作" sortable="" fixed="right" width="280">
             <template #default="{ row }">
-              <el-button type="text" size="small">查看</el-button>
+              <el-button type="text" size="small" @click="$router.push(`/employees/detail/${row.id}`)">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
               <el-button type="text" size="small">角色</el-button>
-              <el-button type="text" size="small" @click="delEmployment(row.id)"
-                >删除</el-button
-              >
+              <el-button
+                type="text"
+                size="small"
+                @click="delEmployment(row.id)"
+              >删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -80,12 +85,12 @@
   </div>
 </template>
 <script>
-import { reqDelEmployee, reqGetUserList } from "@/api/employees";
-import employeesConstant from "@/constant/employees";
-import dayjs from "dayjs";
-import addEmployee from "./components/add-employee.vue";
+import { reqDelEmployee, reqGetUserList } from '@/api/employees'
+import employeesConstant from '@/constant/employees'
+import dayjs from 'dayjs'
+import addEmployee from './components/add-employee.vue'
 export default {
-  name: "Employees",
+  name: 'Employees',
   components: { addEmployee },
   data() {
     return {
@@ -94,117 +99,117 @@ export default {
       list: [],
       total: 0,
       isLoading: false,
-      showDialog: false,
-    };
+      showDialog: false
+    }
   },
   created() {
-    this.getUserList();
+    this.getUserList()
   },
   methods: {
     async handelExport() {
       const {
-        data: { rows },
-      } = await reqGetUserList(1, this.total);
+        data: { rows }
+      } = await reqGetUserList(1, this.total)
       const headersArr = [
-        "姓名",
-        "手机号",
-        "入职日期",
-        "聘用形式",
-        "转正日期",
-        "工号",
-        "部门",
-      ];
+        '姓名',
+        '手机号',
+        '入职日期',
+        '聘用形式',
+        '转正日期',
+        '工号',
+        '部门'
+      ]
       const headersRelations = {
-        姓名: "username",
-        手机号: "mobile",
-        入职日期: "timeOfEntry",
-        聘用形式: "formOfEmployment",
-        转正日期: "correctionTime",
-        工号: "workNumber",
-        部门: "departmentName",
-      };
-      const resultArr = this.formatFn(rows, headersArr, headersRelations);
-      const multiHeader = [["姓名", "主要信息", "", "", "", "", "部门"]];
-      const merges = ["A1:A2", "B1:F1", "G1:G2"];
+        姓名: 'username',
+        手机号: 'mobile',
+        入职日期: 'timeOfEntry',
+        聘用形式: 'formOfEmployment',
+        转正日期: 'correctionTime',
+        工号: 'workNumber',
+        部门: 'departmentName'
+      }
+      const resultArr = this.formatFn(rows, headersArr, headersRelations)
+      const multiHeader = [['姓名', '主要信息', '', '', '', '', '部门']]
+      const merges = ['A1:A2', 'B1:F1', 'G1:G2']
       // console.log({ resultArr })
-      import("@/vendor/Export2Excel").then((excel) => {
+      import('@/vendor/Export2Excel').then((excel) => {
         // console.log(excel)
         excel.export_json_to_excel({
           header: headersArr,
           data: resultArr,
-          filename: "员工信息表",
+          filename: '员工信息表',
           autoWidth: true, // 非必填
-          bookType: "xlsx", // 非必填
+          bookType: 'xlsx', // 非必填
           multiHeader,
-          merges,
-        });
-      });
+          merges
+        })
+      })
     },
     formatFn(rows, headersArr, headersRelations) {
-      const result = [];
+      const result = []
       rows.forEach((row) => {
-        const itemArr = [];
+        const itemArr = []
         headersArr.forEach((key) => {
-          const enKey = headersRelations[key];
-          let val = row[enKey];
-          if (["timeOfEntry", "correctionTime"].includes(enKey)) {
-            val = dayjs(val).format("YYYY年MM月DD日");
+          const enKey = headersRelations[key]
+          let val = row[enKey]
+          if (['timeOfEntry', 'correctionTime'].includes(enKey)) {
+            val = dayjs(val).format('YYYY年MM月DD日')
           }
-          if ("formOfEmployment" === enKey) {
+          if (enKey === 'formOfEmployment') {
             const result = employeesConstant.hireType.find(
               (item) => item.id === val
-            );
-            val = result ? result.value : "未知";
+            )
+            val = result ? result.value : '未知'
           }
-          itemArr.push(val);
-        });
-        result.push(itemArr);
-      });
-      return result;
+          itemArr.push(val)
+        })
+        result.push(itemArr)
+      })
+      return result
     },
     delEmployment(id) {
-      this.$confirm("确认删除该角色吗", "温馨提示")
-        .then(async () => {
-          await reqDelEmployee(id);
-          this.$message.success("删除成功");
+      this.$confirm('确认删除该角色吗', '温馨提示')
+        .then(async() => {
+          await reqDelEmployee(id)
+          this.$message.success('删除成功')
           if (this.list.length === 1 && this.page > 1) {
-            this.page--;
+            this.page--
           }
-          this.getUserList();
+          this.getUserList()
         })
         .catch((error) => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     },
     async getUserList() {
-      this.isLoading = true;
+      this.isLoading = true
       const {
-        data: { total, rows },
-      } = await reqGetUserList(this.page, this.size);
-      this.list = rows;
-      this.total = total;
-      this.isLoading = false;
+        data: { total, rows }
+      } = await reqGetUserList(this.page, this.size)
+      this.list = rows
+      this.total = total
+      this.isLoading = false
     },
     handleSizeChange(val) {
-      this.size = val;
-      this.page = 1;
-      this.getUserList();
+      this.size = val
+      this.page = 1
+      this.getUserList()
     },
     handleCurrentChange(val) {
-      this.page = val;
-      this.getUserList();
+      this.page = val
+      this.getUserList()
     },
     indexMethod(index) {
-      return index + 1 + (this.page - 1) * this.size;
+      return index + 1 + (this.page - 1) * this.size
     },
     formatEmployment(row, column, cellValue, index) {
       const result = employeesConstant.hireType.find(
         (item) => item.id === +cellValue
-      );
-      return result ? result.value : "未知";
-    },
-  },
-};
+      )
+      return result ? result.value : '未知'
+    }
+  }
+}
 </script>
 
 <style></style>
