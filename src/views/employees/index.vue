@@ -36,7 +36,7 @@
           />
           <el-table-column label="头像" prop="staffPhoto" sortable="">
             <template #default="{row}">
-              <img v-imgerror="errorImg" class="user-staff-photo" :src="row.staffPhoto || defaultImg">
+              <img v-imgerror="errorImg" class="user-staff-photo" :src="row.staffPhoto || defaultImg" @click="showQRcode">
             </template>
           </el-table-column>
           <el-table-column label="姓名" prop="username" sortable="" />
@@ -86,6 +86,9 @@
         :show-dialog.sync="showDialog"
         @add-employee="getUserList"
       />
+      <el-dialog :width="'400px'" title="头像二维码" :visible="showImgDialog" @close="showImgDialog = false">
+        二维码
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -106,6 +109,7 @@ export default {
       total: 0,
       isLoading: false,
       showDialog: false,
+      showImgDialog: false,
       defaultImg: 'https://img2.baidu.com/it/u=1759928947,4205593072&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=934',
       errorImg
     }
@@ -215,7 +219,11 @@ export default {
         (item) => item.id === +cellValue
       )
       return result ? result.value : '未知'
+    },
+    showQRcode() {
+      this.showImgDialog = true
     }
+
   }
 }
 </script>
