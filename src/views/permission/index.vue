@@ -4,7 +4,7 @@
       <!-- 表格 -->
       <el-card>
         <div style="text-align: right; margin-bottom: 20px">
-          <el-button type="primary" size="small" @click="clickAddPermission">添加权限</el-button>
+          <el-button type="primary" size="small" @click="clickAddPermission(1, '0')">添加权限</el-button>
         </div>
         <el-table border :data="list" row-key="id">
           <el-table-column label="名称" prop="name" />
@@ -12,7 +12,7 @@
           <el-table-column label="描述" prop="description" />
           <el-table-column label="操作">
             <template #default="{row}">
-              <el-button v-if="row.type === 1" size="small" type="text" @click="clickAddPermission">添加权限点</el-button>
+              <el-button v-if="row.type === 1" size="small" type="text" @click="clickAddPermission(row.type + 1, row.id)">添加权限点</el-button>
               <el-button size="small" type="text">查看</el-button>
               <el-button size="small" type="text">删除</el-button>
             </template>
@@ -45,7 +45,7 @@
           <template #footer>
             <div style="text-align: right;">
               <el-button @click="showDialog = false">取消</el-button>
-              <el-button type="primary">确定</el-button>
+              <el-button type="primary" @click="clickSubmit">确定</el-button>
             </div>
           </template>
         </el-dialog>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { reqGetPermissionList } from '@/api/permission'
+import { reqGetPermissionList, reqAddPermission } from '@/api/permission'
 import { transListToTreeData } from '@/utils'
 export default {
   name: 'Permission',
@@ -77,12 +77,28 @@ export default {
     this.getPermissionList()
   },
   methods: {
-    clickAddPermission() {
+    clickAddPermission(type, pid) {
       this.showDialog = true
+      this.formData.type = type
+      this.formData.pid = pid
     },
     async getPermissionList() {
       const { data } = await reqGetPermissionList()
       this.list = transListToTreeData(data, '0')
+    },
+    async clickSubmit() {
+      await reqAddPermission(this.formData)
+      this.$message.success('添加权限成功')
+      this.showDialog = false
+      this.getPermissionList()
+      this.formData = {
+        enVisible: '0', // 启用禁用, 0禁用, 1启用
+        name: '', // 名称
+        code: '', // 权限标识
+        description: '', // 描述
+        type: '', // 类型标记了一级(页面访问权) 二级(按钮操作权)
+        pid: '' // 添加到哪个节点下
+      }
     }
   }
 }
