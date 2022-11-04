@@ -6,13 +6,13 @@
         <div style="text-align: right; margin-bottom: 20px">
           <el-button type="primary" size="small">添加权限</el-button>
         </div>
-        <el-table border :data="list">
+        <el-table border :data="list" row-key="id">
           <el-table-column label="名称" prop="name" />
           <el-table-column label="标识" prop="code" />
           <el-table-column label="描述" prop="description" />
           <el-table-column label="操作">
-            <template>
-              <el-button size="small" type="text">添加权限点</el-button>
+            <template #default="{row}">
+              <el-button v-if="row.type === 1" size="small" type="text">添加权限点</el-button>
               <el-button size="small" type="text">查看</el-button>
               <el-button size="small" type="text">删除</el-button>
             </template>
@@ -25,6 +25,7 @@
 
 <script>
 import { reqGetPermissionList } from '@/api/permission'
+import { transListToTreeData } from '@/utils'
 export default {
   name: 'Permission',
   data() {
@@ -38,7 +39,7 @@ export default {
   methods: {
     async getPermissionList() {
       const { data } = await reqGetPermissionList()
-      this.list = data
+      this.list = transListToTreeData(data, '0')
     }
   }
 }
