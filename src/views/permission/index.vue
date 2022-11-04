@@ -4,7 +4,7 @@
       <!-- 表格 -->
       <el-card>
         <div style="text-align: right; margin-bottom: 20px">
-          <el-button type="primary" size="small">添加权限</el-button>
+          <el-button type="primary" size="small" @click="clickAddPermission">添加权限</el-button>
         </div>
         <el-table border :data="list" row-key="id">
           <el-table-column label="名称" prop="name" />
@@ -12,12 +12,43 @@
           <el-table-column label="描述" prop="description" />
           <el-table-column label="操作">
             <template #default="{row}">
-              <el-button v-if="row.type === 1" size="small" type="text">添加权限点</el-button>
+              <el-button v-if="row.type === 1" size="small" type="text" @click="clickAddPermission">添加权限点</el-button>
               <el-button size="small" type="text">查看</el-button>
               <el-button size="small" type="text">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
+        <!-- 新增编辑的弹层 -->
+        <el-dialog :visible="showDialog" title="弹层标题" @close="showDialog = false">
+          <!-- 表单内容 -->
+          <el-form label-width="100px">
+            <el-form-item label="权限名称">
+              <el-input v-model="formData.name" />
+            </el-form-item>
+            <el-form-item label="权限标识">
+              <el-input v-model="formData.code" />
+            </el-form-item>
+            <el-form-item label="权限描述">
+              <el-input v-model="formData.description" />
+            </el-form-item>
+            <el-form-item label="权限启用">
+              <el-switch
+                v-model="formData.enVisible"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                active-value="1"
+                inactive-value="0"
+              />
+            </el-form-item>
+          </el-form>
+
+          <template #footer>
+            <div style="text-align: right;">
+              <el-button @click="showDialog = false">取消</el-button>
+              <el-button type="primary">确定</el-button>
+            </div>
+          </template>
+        </el-dialog>
       </el-card>
     </div>
   </div>
@@ -30,13 +61,25 @@ export default {
   name: 'Permission',
   data() {
     return {
-      list: []
+      list: [],
+      showDialog: false,
+      formData: {
+        enVisible: '0', // 启用禁用, 0禁用, 1启用
+        name: '', // 名称
+        code: '', // 权限标识
+        description: '', // 描述
+        type: '', // 类型标记了一级(页面访问权) 二级(按钮操作权)
+        pid: '' // 添加到哪个节点下
+      }
     }
   },
   created() {
     this.getPermissionList()
   },
   methods: {
+    clickAddPermission() {
+      this.showDialog = true
+    },
     async getPermissionList() {
       const { data } = await reqGetPermissionList()
       this.list = transListToTreeData(data, '0')
