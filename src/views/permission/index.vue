@@ -14,7 +14,7 @@
             <template #default="{row}">
               <el-button v-if="row.type === 1" size="small" type="text" @click="clickAddPermission(row.type + 1, row.id)">添加权限点</el-button>
               <el-button size="small" type="text">查看</el-button>
-              <el-button size="small" type="text">删除</el-button>
+              <el-button size="small" type="text" @click="clickDel(row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { reqGetPermissionList, reqAddPermission } from '@/api/permission'
+import { reqGetPermissionList, reqAddPermission, reqDelPermission } from '@/api/permission'
 import { transListToTreeData } from '@/utils'
 export default {
   name: 'Permission',
@@ -99,6 +99,13 @@ export default {
         type: '', // 类型标记了一级(页面访问权) 二级(按钮操作权)
         pid: '' // 添加到哪个节点下
       }
+    },
+    clickDel(id) {
+      this.$confirm('亲，确认删除吗', '温馨提示').then(async() => {
+        await reqDelPermission(id)
+        this.$message.success('删除成功')
+        this.getPermissionList()
+      })
     }
   }
 }
