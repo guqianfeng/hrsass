@@ -111,3 +111,18 @@ export function reqUpdateJob(data) {
     data
   })
 }
+
+/**
+ * 给员工分配角色
+ * @param {*} id
+ * @param {*} roleIds
+ * @returns
+ */
+export const reqAssignRoles = (id, roleIds) => request({
+  method: 'PUT',
+  url: '/sys/user/assignRoles',
+  data: {
+    id,
+    roleIds
+  }
+})

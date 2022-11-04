@@ -1,20 +1,20 @@
 <template>
-  <el-dialog v-loading="loadingCheckList" class="assign-role" title="分配角色" :visible="showRoleDialog" @close="closeRoleDialog" @open="openRoleDialog">
+  <el-dialog class="assign-role" title="分配角色" :visible="showRoleDialog" @close="closeRoleDialog" @open="openRoleDialog">
     <!-- 这里准备复选框 -->
     <el-checkbox-group v-model="checkList">
       <el-checkbox v-for="item in roleList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
     </el-checkbox-group>
 
     <template #footer>
-      <el-button type="primary" size="small">确定</el-button>
-      <el-button size="small">取消</el-button>
+      <el-button type="primary" size="small" @click="clickAssignRoles">确定</el-button>
+      <el-button size="small" @click="closeRoleDialog">取消</el-button>
     </template>
   </el-dialog>
 </template>
 
 <script>
 import { reqGetRoleList } from '@/api/setting'
-import { reqGetUserDetailById } from '@/api/employees'
+import { reqAssignRoles, reqGetUserDetailById } from '@/api/employees'
 export default {
   props: {
     showRoleDialog: {
@@ -30,20 +30,22 @@ export default {
   data() {
     return {
       checkList: [],
-      roleList: [],
-      loadingCheckList: false
+      roleList: []
     }
   },
   methods: {
+    async clickAssignRoles() {
+      await reqAssignRoles(this.userId, this.checkList)
+      this.$message.success('分配成功')
+      this.closeRoleDialog()
+    },
     async getRoleList() {
       const { data: { rows }} = await reqGetRoleList(1, 9999)
       this.roleList = rows
     },
     async getEmployeeDetail() {
-      this.loadingCheckList = true
       const { data: { roleIds }} = await reqGetUserDetailById(this.userId)
       this.checkList = roleIds
-      this.loadingCheckList = false
     },
     openRoleDialog() {
       this.getRoleList()
