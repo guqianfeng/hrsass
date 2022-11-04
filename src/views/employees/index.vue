@@ -34,6 +34,11 @@
             sortable=""
             :index="indexMethod"
           />
+          <el-table-column label="头像" prop="staffPhoto" sortable="">
+            <template #default="{row}">
+              <img v-imgerror="errorImg" class="user-staff-photo" :src="row.staffPhoto || defaultImg">
+            </template>
+          </el-table-column>
           <el-table-column label="姓名" prop="username" sortable="" />
           <el-table-column label="手机号" prop="mobile" sortable="" />
           <el-table-column label="工号" prop="workNumber" sortable="" />
@@ -89,6 +94,7 @@ import { reqDelEmployee, reqGetUserList } from '@/api/employees'
 import employeesConstant from '@/constant/employees'
 import dayjs from 'dayjs'
 import addEmployee from './components/add-employee.vue'
+import errorImg from '@/assets/common/bigUserHeader.png'
 export default {
   name: 'Employees',
   components: { addEmployee },
@@ -99,7 +105,9 @@ export default {
       list: [],
       total: 0,
       isLoading: false,
-      showDialog: false
+      showDialog: false,
+      defaultImg: 'https://img2.baidu.com/it/u=1759928947,4205593072&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=934',
+      errorImg
     }
   },
   created() {
@@ -212,4 +220,10 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.user-staff-photo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+</style>
