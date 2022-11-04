@@ -22,6 +22,9 @@ import * as filters from '@/filters'
 import HrSassUI from '@/components'
 Vue.use(HrSassUI)
 
+import Print from 'vue-print-nb'
+Vue.use(Print)
+
 // import PageTools from '@/components/PageTools'
 // Vue.component('PageTools', PageTools)
 
