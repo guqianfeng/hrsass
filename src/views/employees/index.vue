@@ -36,7 +36,7 @@
           />
           <el-table-column label="头像" prop="staffPhoto" sortable="">
             <template #default="{row}">
-              <img v-imgerror="errorImg" class="user-staff-photo" :src="row.staffPhoto || defaultImg" @click="showQRcode">
+              <img v-imgerror="errorImg" class="user-staff-photo" :src="row.staffPhoto || defaultImg" @click="showQRcode(row.staffPhoto)">
             </template>
           </el-table-column>
           <el-table-column label="姓名" prop="username" sortable="" />
@@ -87,7 +87,9 @@
         @add-employee="getUserList"
       />
       <el-dialog :width="'400px'" title="头像二维码" :visible="showImgDialog" @close="showImgDialog = false">
-        二维码
+        <div style="text-align: center">
+          <canvas ref="myCanvas" />
+        </div>
       </el-dialog>
     </div>
   </div>
@@ -98,6 +100,7 @@ import employeesConstant from '@/constant/employees'
 import dayjs from 'dayjs'
 import addEmployee from './components/add-employee.vue'
 import errorImg from '@/assets/common/bigUserHeader.png'
+import QrCode from 'qrcode'
 export default {
   name: 'Employees',
   components: { addEmployee },
@@ -220,8 +223,12 @@ export default {
       )
       return result ? result.value : '未知'
     },
-    showQRcode() {
+    showQRcode(imgUrl) {
+      if (!imgUrl) return
       this.showImgDialog = true
+      this.$nextTick(() => {
+        QrCode.toCanvas(this.$refs.myCanvas, imgUrl)
+      })
     }
 
   }
