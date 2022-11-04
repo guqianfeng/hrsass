@@ -1,7 +1,11 @@
 <template>
   <el-dialog class="assign-role" title="分配角色" :visible="showRoleDialog" @close="closeRoleDialog">
     <!-- 这里准备复选框 -->
-    ...
+    <el-checkbox-group v-model="checkList">
+      <el-checkbox label="001">A</el-checkbox>
+      <el-checkbox label="002">B</el-checkbox>
+      <el-checkbox label="003">C</el-checkbox>
+    </el-checkbox-group>
 
     <template #footer>
       <el-button type="primary" size="small">确定</el-button>
@@ -21,6 +25,11 @@ export default {
     userId: {
       type: String,
       default: null
+    }
+  },
+  data() {
+    return {
+      checkList: []
     }
   },
   methods: {
