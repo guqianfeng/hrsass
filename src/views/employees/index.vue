@@ -60,7 +60,7 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="editRow(row.id)">角色</el-button>
               <el-button
                 type="text"
                 size="small"
@@ -91,6 +91,7 @@
           <canvas ref="myCanvas" />
         </div>
       </el-dialog>
+      <assign-role :show-role-dialog.sync="showRoleDialog" :user-id="userId" />
     </div>
   </div>
 </template>
@@ -101,9 +102,10 @@ import dayjs from 'dayjs'
 import addEmployee from './components/add-employee.vue'
 import errorImg from '@/assets/common/bigUserHeader.png'
 import QrCode from 'qrcode'
+import AssignRole from './components/assign-role.vue'
 export default {
   name: 'Employees',
-  components: { addEmployee },
+  components: { addEmployee, AssignRole },
   data() {
     return {
       page: 1,
@@ -114,13 +116,19 @@ export default {
       showDialog: false,
       showImgDialog: false,
       defaultImg: 'https://img2.baidu.com/it/u=1759928947,4205593072&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=934',
-      errorImg
+      errorImg,
+      showRoleDialog: false,
+      userId: ''
     }
   },
   created() {
     this.getUserList()
   },
   methods: {
+    editRow(id) {
+      this.showRoleDialog = true
+      this.userId = id
+    },
     async handleExport() {
       const {
         data: { rows }
