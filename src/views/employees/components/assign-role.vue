@@ -1,5 +1,5 @@
 <template>
-  <el-dialog class="assign-role" title="分配角色" :visible="showRoleDialog" @close="closeRoleDialog" @open="openRoleDialog">
+  <el-dialog v-loading="loadingCheckList" class="assign-role" title="分配角色" :visible="showRoleDialog" @close="closeRoleDialog" @open="openRoleDialog">
     <!-- 这里准备复选框 -->
     <el-checkbox-group v-model="checkList">
       <el-checkbox v-for="item in roleList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
@@ -14,6 +14,7 @@
 
 <script>
 import { reqGetRoleList } from '@/api/setting'
+import { reqGetUserDetailById } from '@/api/employees'
 export default {
   props: {
     showRoleDialog: {
@@ -29,7 +30,8 @@ export default {
   data() {
     return {
       checkList: [],
-      roleList: []
+      roleList: [],
+      loadingCheckList: false
     }
   },
   methods: {
@@ -37,11 +39,19 @@ export default {
       const { data: { rows }} = await reqGetRoleList(1, 9999)
       this.roleList = rows
     },
+    async getEmployeeDetail() {
+      this.loadingCheckList = true
+      const { data: { roleIds }} = await reqGetUserDetailById(this.userId)
+      this.checkList = roleIds
+      this.loadingCheckList = false
+    },
     openRoleDialog() {
       this.getRoleList()
+      this.getEmployeeDetail()
     },
     closeRoleDialog() {
       this.$emit('update:showRoleDialog', false)
+      this.checkList = []
     }
   }
 }
