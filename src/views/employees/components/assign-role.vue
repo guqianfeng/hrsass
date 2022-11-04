@@ -1,7 +1,7 @@
 <template>
   <el-dialog class="assign-role" title="分配角色" :visible="showRoleDialog" @close="closeRoleDialog" @open="openRoleDialog">
     <!-- 这里准备复选框 -->
-    <el-checkbox-group v-model="checkList">
+    <el-checkbox-group v-model="checkList" v-loading="loading">
       <el-checkbox v-for="item in roleList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
     </el-checkbox-group>
 
@@ -30,7 +30,8 @@ export default {
   data() {
     return {
       checkList: [],
-      roleList: []
+      roleList: [],
+      loading: false
     }
   },
   methods: {
@@ -48,8 +49,10 @@ export default {
       this.checkList = roleIds
     },
     openRoleDialog() {
-      this.getRoleList()
-      this.getEmployeeDetail()
+      this.loading = true
+      Promise.all([this.getRoleList(), this.getEmployeeDetail()]).then(_ => {
+        this.loading = false
+      })
     },
     closeRoleDialog() {
       this.$emit('update:showRoleDialog', false)
