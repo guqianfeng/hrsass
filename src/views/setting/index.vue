@@ -11,7 +11,7 @@
               <el-table-column label="描述" prop="description" />
               <el-table-column label="操作">
                 <template #default="{row}">
-                  <el-button type="text" size="small">分配权限</el-button>
+                  <el-button type="text" size="small" @click="clickAssign(row.id)">分配权限</el-button>
                   <el-button type="text" size="small" @click="edit(row.id)">编辑</el-button>
                   <el-button type="text" size="small" @click="del(row.id)">删除</el-button>
                 </template>
@@ -73,6 +73,16 @@
         </template>
       </el-dialog>
     </div>
+    <!-- 分配权限的弹层 -->
+    <el-dialog title="分配权限" :visible="showAssignDialog" @close="closeAssignDialog">
+      内容部分
+      <template #footer>
+        <div style="text-align: right;">
+          <el-button @click="closeAssignDialog">取消</el-button>
+          <el-button type="primary">确定</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -84,6 +94,8 @@ export default {
   name: 'Setting',
   data() {
     return {
+      showAssignDialog: false,
+      roleId: '',
       companyForm: {
         name: '',
         companyAddress: '',
@@ -122,6 +134,13 @@ export default {
     this.getCompanyInfo() // 获取公司信息
   },
   methods: {
+    clickAssign(id) {
+      this.roleId = id
+      this.showAssignDialog = true
+    },
+    closeAssignDialog() {
+      this.showAssignDialog = false
+    },
     async getCompanyInfo() {
       const { data } = await reqGetCompanyById(this.userInfo.companyId)
       this.companyForm = data
