@@ -55,3 +55,18 @@ export const reqUpdateRole = (form) => request({
   method: 'put',
   data: form
 })
+
+/**
+ * 给角色分配权限
+ * @param {*} id
+ * @param {*} permIds
+ * @returns
+ */
+export const reqAssignPerm = (id, permIds) => request({
+  method: 'put',
+  url: 'sys/role/assignPrem',
+  data: {
+    id,
+    permIds
+  }
+})

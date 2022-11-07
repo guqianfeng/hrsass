@@ -79,7 +79,7 @@
       <template #footer>
         <div style="text-align: right;">
           <el-button @click="closeAssignDialog">取消</el-button>
-          <el-button type="primary">确定</el-button>
+          <el-button type="primary" @click="clickAssignSubmit">确定</el-button>
         </div>
       </template>
     </el-dialog>
@@ -89,7 +89,7 @@
 <script>
 import { mapState } from 'vuex'
 import { reqGetCompanyById } from '@/api/company'
-import { reqAddRole, reqDelRole, reqGetRoleDetail, reqGetRoleList, reqUpdateRole } from '@/api/setting'
+import { reqAddRole, reqAssignPerm, reqDelRole, reqGetRoleDetail, reqGetRoleList, reqUpdateRole } from '@/api/setting'
 import { reqGetPermissionList } from '@/api/permission'
 import { transListToTreeData } from '@/utils'
 export default {
@@ -137,6 +137,11 @@ export default {
     this.getCompanyInfo() // 获取公司信息
   },
   methods: {
+    async clickAssignSubmit() {
+      await reqAssignPerm(this.roleId, this.$refs.tree.getCheckedKeys())
+      this.$message.success('分配权限成功')
+      this.closeAssignDialog()
+    },
     async clickAssign(id) {
       this.roleId = id
       this.showAssignDialog = true
