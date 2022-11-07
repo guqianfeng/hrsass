@@ -106,11 +106,12 @@ import addEmployee from './components/add-employee.vue'
 import errorImg from '@/assets/common/bigUserHeader.png'
 import QrCode from 'qrcode'
 import AssignRole from './components/assign-role.vue'
-import common from '@/mixins/common'
+import hello from '@/mixins/hello'
+import check from '@/mixins/check'
 export default {
   name: 'Employees',
   components: { addEmployee, AssignRole },
-  mixins: [common],
+  mixins: [hello, check],
   data() {
     return {
       title: '员工',
@@ -138,14 +139,6 @@ export default {
         return
       }
       this.showDialog = true
-    },
-    checkPermission(str) {
-      const roles = this.$store.getters.roles
-      if (roles) {
-        return roles.points.includes(str)
-      } else {
-        return false
-      }
     },
     editRow(id) {
       this.showRoleDialog = true
