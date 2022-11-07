@@ -68,7 +68,7 @@
           </el-form-item>
         </el-form>
         <template #footer>
-          <el-button>取消</el-button>
+          <el-button @click="closeDialog">取消</el-button>
           <el-button type="primary" @click="clickSubmit">确认</el-button>
         </template>
       </el-dialog>
