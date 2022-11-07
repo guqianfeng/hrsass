@@ -8,11 +8,13 @@
 
         <template #right>
           <el-button
+            v-if="checkPermission('excel_import')"
             type="warning"
             size="small"
             @click="$router.push('/import?type=user')"
           >excel导入</el-button>
           <el-button
+            v-if="checkPermission('excel_export')"
             type="danger"
             size="small"
             @click="handleExport"
@@ -20,7 +22,7 @@
           <el-button
             type="primary"
             size="small"
-            @click="showDialog = true"
+            @click="clickAddEmployees"
           >新增员工</el-button>
         </template>
       </page-tools>
@@ -126,6 +128,13 @@ export default {
     this.getUserList()
   },
   methods: {
+    clickAddEmployees() {
+      if (!this.checkPermission('user_add')) {
+        this.$message.error('请联系管理员添加权限')
+        return
+      }
+      this.showDialog = true
+    },
     checkPermission(str) {
       const roles = this.$store.getters.roles
       if (roles) {
