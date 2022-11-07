@@ -56,12 +56,13 @@
           </el-table-column>
           <el-table-column label="操作" sortable="" fixed="right" width="280">
             <template #default="{ row }">
-              <el-button type="text" size="small" @click="$router.push(`/employees/detail/${row.id}`)">查看</el-button>
+              <el-button :disabled="!checkPermission('user_look')" type="text" size="small" @click="$router.push(`/employees/detail/${row.id}`)">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
               <el-button type="text" size="small" @click="editRow(row.id)">角色</el-button>
               <el-button
+                :disabled="!checkPermission('user_del')"
                 type="text"
                 size="small"
                 @click="delEmployment(row.id)"
@@ -125,6 +126,14 @@ export default {
     this.getUserList()
   },
   methods: {
+    checkPermission(str) {
+      const roles = this.$store.getters.roles
+      if (roles) {
+        return roles.points.includes(str)
+      } else {
+        return false
+      }
+    },
     editRow(id) {
       this.showRoleDialog = true
       this.userId = id
