@@ -1,4 +1,4 @@
-import router from '@/router'
+import router, { asyncRoutes } from '@/router'
 import store from '@/store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -13,7 +13,14 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done()
     } else {
       if (!store.state.user.userInfo.userId) {
-        await store.dispatch('user/getUserInfo')
+        const { roles: { menus }} = await store.dispatch('user/getUserInfo')
+        console.log(menus)
+        router.addRoutes(asyncRoutes)
+        next({
+          ...to,
+          replace: true
+        })
+        return
       }
       next()
     }
