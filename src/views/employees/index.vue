@@ -106,11 +106,14 @@ import addEmployee from './components/add-employee.vue'
 import errorImg from '@/assets/common/bigUserHeader.png'
 import QrCode from 'qrcode'
 import AssignRole from './components/assign-role.vue'
+import common from '@/mixins/common'
 export default {
   name: 'Employees',
   components: { addEmployee, AssignRole },
+  mixins: [common],
   data() {
     return {
+      title: '员工',
       page: 1,
       size: 5,
       list: [],
@@ -125,6 +128,7 @@ export default {
     }
   },
   created() {
+    console.log('员工页的created')
     this.getUserList()
   },
   methods: {
