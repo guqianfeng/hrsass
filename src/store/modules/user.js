@@ -1,4 +1,5 @@
 import { reqGetBaseInfo, reqGetProfile, reqLogin } from '@/api/user'
+import { resetRouter } from '@/router'
 import { getToken, removeToken, setToken } from '@/utils/auth'
 const state = {
   token: getToken(),
@@ -41,6 +42,8 @@ const actions = {
   async logout(context) {
     context.commit('removeToken')
     context.commit('removeUserInfo')
+    resetRouter()
+    context.commit('permission/setRoutes', [], { root: true })
   }
 }
 
