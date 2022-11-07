@@ -75,7 +75,7 @@
     </div>
     <!-- 分配权限的弹层 -->
     <el-dialog title="分配权限" :visible="showAssignDialog" @close="closeAssignDialog">
-      内容部分
+      <el-tree :data="permissionsList" :props="{label: 'name'}" show-checkbox check-strictly />
       <template #footer>
         <div style="text-align: right;">
           <el-button @click="closeAssignDialog">取消</el-button>
@@ -90,6 +90,8 @@
 import { mapState } from 'vuex'
 import { reqGetCompanyById } from '@/api/company'
 import { reqAddRole, reqDelRole, reqGetRoleDetail, reqGetRoleList, reqUpdateRole } from '@/api/setting'
+import { reqGetPermissionList } from '@/api/permission'
+import { transListToTreeData } from '@/utils'
 export default {
   name: 'Setting',
   data() {
@@ -120,7 +122,8 @@ export default {
         description: [{
           required: true, message: '请填写角色描述', trigger: ['blur', 'change']
         }]
-      }
+      },
+      permissionsList: []
     }
   },
   computed: {
@@ -134,9 +137,11 @@ export default {
     this.getCompanyInfo() // 获取公司信息
   },
   methods: {
-    clickAssign(id) {
+    async clickAssign(id) {
       this.roleId = id
       this.showAssignDialog = true
+      const { data } = await reqGetPermissionList()
+      this.permissionsList = transListToTreeData(data, '0')
     },
     closeAssignDialog() {
       this.showAssignDialog = false
