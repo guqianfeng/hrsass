@@ -15,8 +15,10 @@ router.beforeEach(async(to, from, next) => {
       if (!store.state.user.userInfo.userId) {
         const { roles: { menus }} = await store.dispatch('user/getUserInfo')
         const otherRoutes = await store.dispatch('permission/filterRoutes', menus)
-        console.log({ otherRoutes })
-        router.addRoutes(otherRoutes)
+        router.addRoutes([
+          ...otherRoutes,
+          { path: '*', redirect: '/404', hidden: true }
+        ])
         next({
           ...to,
           replace: true

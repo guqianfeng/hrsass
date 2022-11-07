@@ -4,7 +4,7 @@ const state = {
 }
 const mutations = {
   setRoutes(state, otherRoutes) {
-    state.routes = [...constantRoutes, ...otherRoutes]
+    state.routes = [...constantRoutes, ...otherRoutes, { path: '*', redirect: '/404', hidden: true }]
   }
 }
 const actions = {
