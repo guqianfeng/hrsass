@@ -26,8 +26,12 @@ export default {
   data() {
     return {
       currentYear: null, // 当前年份
-      currentMonth: null, // 当前月份
-      yearList: [2021, 2022, 2023] // 要遍历的年的数组
+      currentMonth: null // 当前月份
+    }
+  },
+  computed: {
+    yearList() {
+      return Array.from({ length: 11 }, (item, index) => this.currentYear + index - 5)
     }
   },
   created() {
