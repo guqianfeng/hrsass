@@ -75,7 +75,7 @@
     </div>
     <!-- 分配权限的弹层 -->
     <el-dialog title="分配权限" :visible="showAssignDialog" @close="closeAssignDialog">
-      <el-tree :data="permissionsList" :props="{label: 'name'}" show-checkbox check-strictly />
+      <el-tree ref="tree" :data="permissionsList" :props="{label: 'name'}" show-checkbox check-strictly node-key="id" />
       <template #footer>
         <div style="text-align: right;">
           <el-button @click="closeAssignDialog">取消</el-button>
@@ -142,9 +142,12 @@ export default {
       this.showAssignDialog = true
       const { data } = await reqGetPermissionList()
       this.permissionsList = transListToTreeData(data, '0')
+      const { data: { permIds }} = await reqGetRoleDetail(this.roleId)
+      this.$refs.tree.setCheckedKeys(permIds)
     },
     closeAssignDialog() {
       this.showAssignDialog = false
+      this.$refs.tree.setCheckedKeys([])
     },
     async getCompanyInfo() {
       const { data } = await reqGetCompanyById(this.userInfo.companyId)
