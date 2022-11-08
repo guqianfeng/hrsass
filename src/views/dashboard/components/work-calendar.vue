@@ -10,12 +10,23 @@
         <el-option v-for="item in 12" :key="item" :label="item" :value="item" />
       </el-select>
     </div>
-    <el-calendar v-model="currentDate" />
+    <!-- { "isSelected": true, "type": "current-month", "day": "2022-11-03" } -->
+    <el-calendar v-model="currentDate">
+      <template #dateCell="{date, data}">
+        <p>{{ data.day | time }}</p>
+      </template>
+    </el-calendar>
   </div>
 </template>
 
 <script>
 export default {
+  filters: {
+    time(val) {
+      const str = val.split('-')[2]
+      return str.startsWith('0') ? str.slice(1) : str
+    }
+  },
   props: {
     startDate: {
       type: Date,
