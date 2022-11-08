@@ -50,6 +50,13 @@ export default {
       return Array.from({ length: 11 }, (item, index) => this.currentYear + index - 5)
     }
   },
+  watch: {
+    currentDate(newValue) {
+      this.currentYear = newValue.getFullYear()
+      this.currentMonth = newValue.getMonth() + 1
+    }
+
+  },
   created() {
     this.currentYear = this.startDate.getFullYear() // 得到当前年份
     this.currentMonth = this.startDate.getMonth() + 1 // 当前月份
