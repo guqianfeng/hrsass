@@ -12,8 +12,11 @@
     </div>
     <!-- { "isSelected": true, "type": "current-month", "day": "2022-11-03" } -->
     <el-calendar v-model="currentDate">
-      <template #dateCell="{date, data}">
-        <p>{{ data.day | time }}</p>
+      <template #dateCell="{ data, date }">
+        <div class="date-content">
+          <span class="text">{{ data.day | time }}</span>
+          <span v-if="isWeek(date)" class="rest">休</span>
+        </div>
       </template>
     </el-calendar>
   </div>
@@ -53,6 +56,9 @@ export default {
     this.changeHandle()
   },
   methods: {
+    isWeek(date) {
+      return [0, 6].includes(date.getDay())
+    },
     changeHandle() {
     //   console.log(this.currentYear, this.currentMonth)
       this.currentDate = new Date(`${this.currentYear}-${this.currentMonth}-01`)
