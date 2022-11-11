@@ -13,6 +13,7 @@
     </div>
 
     <div class="right-menu">
+      <lang />
       <theme-picker class="right-menu-item" style="padding-top: 10px" @change="changeThemeHandle" />
       <screen-full class="right-menu-item" />
       <el-dropdown class="avatar-container" trigger="click">
