@@ -3,12 +3,13 @@ import Cookies from 'js-cookie'
 
 const { showSettings, fixedHeader, sidebarLogo } = defaultSettings
 
-const ThemeColor = 'theme-color'
+const themeKey = 'theme-color'
+const themeDefaultColor = '#407ffe'
 const state = {
   showSettings: showSettings,
   fixedHeader: fixedHeader,
   sidebarLogo: sidebarLogo,
-  theme: Cookies.get(ThemeColor) || '#212121'
+  theme: Cookies.get(themeKey) || themeDefaultColor
 }
 
 const mutations = {
@@ -18,8 +19,14 @@ const mutations = {
       state[key] = value
     }
     if (key === 'theme') {
-      Cookies.set(ThemeColor, value)
+      Cookies.set(themeKey, value)
     }
+  },
+  resetTheme(state) {
+    // 重置成默认颜色
+    state.theme = themeDefaultColor
+    // cookies中也要移出
+    Cookies.remove(themeKey)
   }
 }
 
