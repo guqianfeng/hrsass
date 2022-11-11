@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <div class="navbar" :style="{background: $store.state.settings.theme}">
     <hamburger
       :is-active="sidebar.opened"
       class="hamburger-container"
