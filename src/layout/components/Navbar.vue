@@ -13,7 +13,7 @@
     </div>
 
     <div class="right-menu">
-      <theme-picker class="right-menu-item" style="padding-top: 10px" />
+      <theme-picker class="right-menu-item" style="padding-top: 10px" @change="changeThemeHandle" />
       <screen-full class="right-menu-item" />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -61,6 +61,9 @@ export default {
     ...mapGetters(['sidebar', 'avatar', 'name', 'staffPhoto'])
   },
   methods: {
+    changeThemeHandle(value) {
+      this.$store.dispatch('settings/changeSetting', { key: 'theme', value })
+    },
     ...mapActions('user', ['getUserInfo', 'logout']),
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
