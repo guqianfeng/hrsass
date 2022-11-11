@@ -93,7 +93,7 @@ import { reqAddRole, reqAssignPerm, reqDelRole, reqGetRoleDetail, reqGetRoleList
 import { reqGetPermissionList } from '@/api/permission'
 import { transListToTreeData } from '@/utils'
 export default {
-  name: 'Setting',
+  name: 'Settings',
   data() {
     return {
       showAssignDialog: false,

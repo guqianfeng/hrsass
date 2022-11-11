@@ -58,7 +58,7 @@
 import { reqGetPermissionList, reqAddPermission, reqDelPermission, reqGetPermissionDetail, reqUpdatePermission } from '@/api/permission'
 import { transListToTreeData } from '@/utils'
 export default {
-  name: 'Permission',
+  name: 'Permissions',
   data() {
     return {
       list: [],
