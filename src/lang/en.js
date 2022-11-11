@@ -1,29 +1,29 @@
 export default {
   route: {
     dashboard: 'Dashboard',
-    manage: 'manage',
-    users: 'users',
-    menus: 'menus',
+    manage: 'Manage',
+    users: 'Users',
+    menus: 'Menus',
     // permissions: 'permissions',
-    logs: 'logs',
-    example: 'example',
-    table: 'table',
+    logs: 'Logs',
+    example: 'Example',
+    table: 'Table',
 
     postInfo: 'Job information',
     manageSelf: 'Manager self-help',
-    setting: 'setting',
-    report: 'report',
-    employeesAdd: 'add employees',
+    setting: 'Setting',
+    report: 'Report',
+    employeesAdd: 'Add employees',
     EditiNfo: 'Edit information',
-    print: 'print',
+    print: 'Print',
 
-    form: 'form',
-    basicForm: 'basic form',
-    stepForm: 'step form',
-    advancedList: 'advanced form',
-    step: 'step',
+    form: 'Form',
+    basicForm: 'Basic form',
+    stepForm: 'Step form',
+    advancedList: 'Advanced form',
+    step: 'Step',
 
-    details: 'details',
+    details: 'Details',
     BasicsDetails: 'Basic details page',
     seniorDetails: 'Advanced details page',
     import: 'Import',
@@ -47,7 +47,7 @@ export default {
     employeesLeave: 'Employees-Leave',
     employeesPrint: 'Employees-Print',
     // 工资
-    salarys: 'salarys',
+    salarys: 'Salarys',
     salarysList: 'Salarys-List',
     salarysSetting: 'Salarys-Setting',
     salarysDetails: 'Salarys-Details',
@@ -60,8 +60,8 @@ export default {
     socialHistorical: 'Social-Historical',
     socialMonthStatement: 'Social-Month',
     // 组织架构
-    departments: 'departments',
-    'departments-import': 'import',
+    departments: 'Departments',
+    'departments-import': 'Import',
 
     // 公司
     settings: 'Company-Settings',
@@ -72,7 +72,7 @@ export default {
     // 企业
     'saas-clients': 'Saas-Clients',
     'saas-clients-details': 'Saas-Details',
-    'permissions': 'permissions' // 权限管理
+    'permissions': 'Permissions' // 权限管理
 
   },
   navbar: {
