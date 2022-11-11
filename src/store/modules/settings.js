@@ -1,12 +1,14 @@
 import defaultSettings from '@/settings'
+import Cookies from 'js-cookie'
 
 const { showSettings, fixedHeader, sidebarLogo } = defaultSettings
 
+const ThemeColor = 'theme-color'
 const state = {
   showSettings: showSettings,
   fixedHeader: fixedHeader,
   sidebarLogo: sidebarLogo,
-  theme: '#212121'
+  theme: Cookies.get(ThemeColor) || '#212121'
 }
 
 const mutations = {
@@ -14,6 +16,9 @@ const mutations = {
     // eslint-disable-next-line no-prototype-builtins
     if (state.hasOwnProperty(key)) {
       state[key] = value
+    }
+    if (key === 'theme') {
+      Cookies.set(ThemeColor, value)
     }
   }
 }
