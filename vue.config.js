@@ -12,19 +12,19 @@ const isProduction = process.env.NODE_ENV === 'production' // 判断是否是生
 if (isProduction) {
   externals = {
     // key(要排除的包名), value(引入的CDN包的全局变量名)
-    'vue': 'Vue',
-    'element-ui': 'ELEMENT',
+    // 'vue': 'Vue',
+    // 'element-ui': 'ELEMENT',
     'xlsx': 'XLSX',
     'moment': 'moment'
   }
   cdn = {
     css: [
-      'https://unpkg.com/element-ui/lib/theme-chalk/index.css' // element-ui css 样式表
+      // 'https://unpkg.com/element-ui/lib/theme-chalk/index.css' // element-ui css 样式表
     ],
     js: [
       // vue must at first!
-      'https://unpkg.com/vue/dist/vue.js', // vuejs
-      'https://unpkg.com/element-ui/lib/index.js', // element-ui js
+      // 'https://unpkg.com/vue/dist/vue.js', // vuejs
+      // 'https://unpkg.com/element-ui/lib/index.js', // element-ui js
       'https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/jszip.min.js',
       'https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/xlsx.full.min.js',
       'https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.min.js'
