@@ -8,8 +8,8 @@
 
     <!-- <breadcrumb class="breadcrumb-container" /> -->
     <div class="app-breadcrumb">
-      江苏传智播客教育科技股份有限公司
-      <span class="breadBtn">体验版</span>
+      {{ $t('navbar.title') }}
+      <span class="breadBtn">{{ $t('navbar.enjoy') }}</span>
     </div>
 
     <div class="right-menu">
@@ -25,13 +25,13 @@
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
-            <el-dropdown-item>首页</el-dropdown-item>
+            <el-dropdown-item>{{ $t('navbar.dashboard') }}</el-dropdown-item>
           </router-link>
           <a target="_blank" href="https://github.com/qianfengg/hrsass">
-            <el-dropdown-item>项目地址</el-dropdown-item>
+            <el-dropdown-item>{{ $t('navbar.github') }}</el-dropdown-item>
           </a>
           <el-dropdown-item divided @click.native="onLogout">
-            <span v-color="color" style="display: block">登出</span>
+            <span v-color="color" style="display: block">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
