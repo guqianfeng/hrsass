@@ -61,7 +61,7 @@
 
       <div class="tips">
         <span style="margin-right: 20px">账号: 13800000002</span>
-        <span> 密码: 123456</span>
+        <span> 密码: 888itcast.CN764%...</span>
       </div>
     </el-form>
   </div>
@@ -84,7 +84,7 @@ export default {
     return {
       loginForm: {
         mobile: '13800000002',
-        password: '123456'
+        password: '888itcast.CN764%...'
       },
       loginRules: {
         mobile: [
@@ -107,9 +107,9 @@ export default {
           },
           {
             min: 6,
-            max: 12,
+            max: 20,
             trigger: ['blur', 'change'],
-            message: '密码长度6-12位'
+            message: '密码长度6-20位'
           }
         ]
       },
